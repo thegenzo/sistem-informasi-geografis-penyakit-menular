@@ -12,7 +12,9 @@ class DistrictController extends Controller
      */
     public function index()
     {
-        //
+        $district = District::all();
+
+        return view('admin-panel.district.index', compact('district'));
     }
 
     /**
@@ -20,7 +22,7 @@ class DistrictController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin-panel.district.create');
     }
 
     /**
@@ -28,7 +30,24 @@ class DistrictController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = [
+            'name'          => 'required',
+        ];
+
+        $messages = [
+            'name.required' => 'Nama kecamatan wajib diisi',
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput($request->all());
+        }
+
+        $data = $request->all();
+        District::create($data);
+
+        return redirect()->route('admin-panel.district.index')->with('success', 'Kecamatan berhasil ditambahkan!');
     }
 
     /**
@@ -44,7 +63,7 @@ class DistrictController extends Controller
      */
     public function edit(District $district)
     {
-        //
+        return view('admin-panel.pages.district.edit', compact('district'));
     }
 
     /**
@@ -52,7 +71,24 @@ class DistrictController extends Controller
      */
     public function update(Request $request, District $district)
     {
-        //
+        $rules = [
+            'name'          => 'required',
+        ];
+
+        $messages = [
+            'name.required' => 'Nama kecamatan wajib diisi',
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput($request->all());
+        }
+
+        $data = $request->all();
+        $district->update($data);
+
+        return redirect()->route('admin-panel.district.index')->with('success', 'Kecamatan berhasil diedit!');
     }
 
     /**
@@ -60,6 +96,8 @@ class DistrictController extends Controller
      */
     public function destroy(District $district)
     {
-        //
+        $district->delete();
+        
+        return redirect()->back()->with('success', 'Kecamatan berhasil ditambahkan!');
     }
 }

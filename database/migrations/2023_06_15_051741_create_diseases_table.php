@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('diseases', function (Blueprint $table) {
             $table->id();
+            $table->string('cover_image');
+            $table->string('name');
+            $table->text('description');
+            $table->text('symptoms');
             $table->timestamps();
         });
     }

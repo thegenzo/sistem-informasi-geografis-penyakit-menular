@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Disease extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'cover_image',
+        'name',
+        'description',
+        'symptoms'
+    ];
 }

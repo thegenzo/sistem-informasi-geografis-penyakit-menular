@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\HealthcareFacilities;
 use Illuminate\Http\Request;
+use Validator;
 
 class HealthcareFacilitiesController extends Controller
 {
@@ -12,7 +13,9 @@ class HealthcareFacilitiesController extends Controller
      */
     public function index()
     {
-        //
+        $healthcareFacilities = HealthcareFacilities::all();
+
+        return view('admin-panel.pages.healthcare-facilities.index', compact('healthcareFacilities'));
     }
 
     /**
@@ -20,7 +23,7 @@ class HealthcareFacilitiesController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin-panel.pages.healthcare-facilities.create');
     }
 
     /**
@@ -28,7 +31,32 @@ class HealthcareFacilitiesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = [
+            'name'                      => 'required',
+            'longitude'                 => 'required',
+            'latitude'                  => 'required',
+            'address'                   => 'required',
+            'contact_information'       => 'required',
+        ];
+
+        $messages = [
+            'name.required'                     => 'Nama fasilitas kesehatan wajib diisi',
+            'longitude.required'                => 'Longitude wajib diisi',
+            'latitude.required'                 => 'Latitude wajib diisi',
+            'address.required'                  => 'Alamat wajib diisi',
+            'contact_information.required'      => 'Informati kontak wajib diisi',
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput($request->all());
+        }
+
+        $data = $request->all();
+        HealthcareFacilities::create($data);
+
+        return redirect()->route('admin-panel.healthcare-facilities.index')->with('success', 'Fasilitas kesehatan berhasil ditambahkan!');
     }
 
     /**
@@ -44,7 +72,7 @@ class HealthcareFacilitiesController extends Controller
      */
     public function edit(HealthcareFacilities $healthcareFacilities)
     {
-        //
+        return view('admin-panel.healthcare-facilities.edit', compact('healthcareFacilities'));
     }
 
     /**
@@ -52,7 +80,32 @@ class HealthcareFacilitiesController extends Controller
      */
     public function update(Request $request, HealthcareFacilities $healthcareFacilities)
     {
-        //
+        $rules = [
+            'name'                      => 'required',
+            'longitude'                 => 'required',
+            'latitude'                  => 'required',
+            'address'                   => 'required',
+            'contact_information'       => 'required',
+        ];
+
+        $messages = [
+            'name.required'                     => 'Nama fasilitas kesehatan wajib diisi',
+            'longitude.required'                => 'Longitude wajib diisi',
+            'latitude.required'                 => 'Latitude wajib diisi',
+            'address.required'                  => 'Alamat wajib diisi',
+            'contact_information.required'      => 'Informati kontak wajib diisi',
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput($request->all());
+        }
+
+        $data = $request->all();
+        $healthcareFacilities->update($data);
+
+        return redirect()->route('admin-panel.healthcare-facilities.index')->with('success', 'Fasilitas kesehatan berhasil diedit!'); 
     }
 
     /**
@@ -60,6 +113,8 @@ class HealthcareFacilitiesController extends Controller
      */
     public function destroy(HealthcareFacilities $healthcareFacilities)
     {
-        //
+        $healthcareFacilities->delete();
+
+        return redirect()->back()->with('success', 'Fasilitas kesehatan berhasil dihapus!');
     }
 }

@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('healthcare_facilities', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->text('longitude');
+            $table->text('latitude');
+            $table->text('address');
+            $table->text('contact_information');
             $table->timestamps();
         });
     }
