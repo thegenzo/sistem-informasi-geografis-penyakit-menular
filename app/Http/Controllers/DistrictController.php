@@ -14,7 +14,7 @@ class DistrictController extends Controller
     {
         $district = District::all();
 
-        return view('admin-panel.district.index', compact('district'));
+        return view('admin-panel.pages.district.index', compact('district'));
     }
 
     /**
@@ -22,7 +22,7 @@ class DistrictController extends Controller
      */
     public function create()
     {
-        return view('admin-panel.district.create');
+        return view('admin-panel.pages.district.create');
     }
 
     /**

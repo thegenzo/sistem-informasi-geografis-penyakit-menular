@@ -1,6 +1,6 @@
 @extends('admin-panel.layout.app')
 
-@section('title', 'Manajemen Tautan Footer')
+@section('title', 'Manajemen Kecamatan')
 
 @push('addon-style')
     <!-- CSS Libraries -->
@@ -12,46 +12,44 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Manajemen Tautan Footer</h1>
+                <h1>Manajemen Kecamatan</h1>
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item"><a href="#">Dashboard</a></div>
-                    <div class="breadcrumb-item active">Manajemen Tautan Footer</div>
+                    <div class="breadcrumb-item active">Manajemen Kecamatan</div>
                 </div>
             </div>
             <div class="row">
                 <div class="col">
-                    <a href="{{ route('admin-panel.footer-link.create') }}" class="btn btn-icon icon-left btn-primary mb-4"><i
-                            class="fas fa-plus"></i>Tambah Tautan Footer</a>
+                    <a href="{{ route('admin-panel.district.create') }}" class="btn btn-icon icon-left btn-primary mb-4"><i
+                            class="fas fa-plus"></i>Tambah Kecamatan</a>
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-12 col-md-6 col-12 col-sm-6">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Manajemen Tautan Footer</h4>
+                            <h4>Manajemen Kecamatan</h4>
                         </div>
                         <div class="card-body">
                             <table class="table table-striped table-hover" id="datatable">
                                 <thead>
                                     <tr>
                                         <th class="text-center">No</th>
-                                        <th>Nama</th>
-										<th>URL</th>
+                                        <th>Nama Kecamatan</th>
                                         <th class="text-center">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($footer as $data)
+                                    @forelse ($district as $data)
                                         <tr>
                                             <td class="text-center">{{ $loop->iteration }}</td>
                                             <td>{{ $data->name }}</td>
-											<td>{{ $data->url }}</td>
                                             <td class="text-center">
-                                                <a href="{{ route('admin-panel.footer-link.edit', $data->id) }} " class="btn btn-warning"
+                                                <a href="{{ route('admin-panel.district.edit', $data->id) }} " class="btn btn-warning"
                                                     data-toggle="tooltip" data-placement="top" title="Edit">
                                                     <i class="fa fa-pencil-alt"></i>
                                                 </a>
-                                                <form action="{{ route('admin-panel.footer-link.destroy', $data->id) }}" method="POST" class="d-inline swal-confirm">
+                                                <form action="{{ route('admin-panel.district.destroy', $data->id) }}" method="POST" class="d-inline swal-confirm">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button class="btn btn-danger swal-confirm" type="submit"
@@ -63,8 +61,8 @@
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="4" style="font-weight: bold; font-size: 18px;"
-                                                class="text-center">Data Footer Kosong</td>
+                                            <td colspan="3" style="font-weight: bold; font-size: 18px;"
+                                                class="text-center">Data Kecamatan Kosong</td>
                                         </tr>
                                     @endforelse
                                 </tbody>

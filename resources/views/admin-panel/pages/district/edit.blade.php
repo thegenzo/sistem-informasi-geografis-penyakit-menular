@@ -1,6 +1,6 @@
 @extends('admin-panel.layout.app')
 
-@section('title', 'Edit Tautan Footer')
+@section('title', 'Edit Kecamatan')
 
 @push('addon-style')
 	<link rel="stylesheet" href="{{ asset('panel-assets/node_modules/select2/dist/css/select2.min.css') }}">
@@ -13,11 +13,11 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Edit Tautan Footer</h1>
+                <h1>Edit Kecamatan</h1>
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item"><a href="#">Dashboard</a></div>
-                    <div class="breadcrumb-item">Data Tautan Footer</div>
-                    <div class="breadcrumb-item active">Edit Tautan Footer</div>
+                    <div class="breadcrumb-item">Data Kecamatan</div>
+                    <div class="breadcrumb-item active">Edit Kecamatan</div>
                 </div>
             </div>
             <div class="row">
@@ -35,25 +35,21 @@
                             </div>
                         </div>
                     @endif
-                    <form action="{{ route('admin-panel.footer-link.update', $footerLink->id) }}" method="post">
+                    <form action="{{ route('admin-panel.district.update', $footerLink->id) }}" method="post">
                         @csrf
 						@method('PUT')
                         <div class="card">
                             <div class="card-header">
-                                <h4>Masukkan Data Footer</h4>
+                                <h4>Edit Data Kecamatan</h4>
                             </div>
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="name">Nama Footer <span class="text-danger">*</span></label>
+                                    <label for="name">Nama Kecamatan <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" name="name" id="name" value="{{ $footerLink->name }}">
-                                </div>
-                                <div class="form-group">
-                                    <label for="url">URL Footer <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="url" id="url" value="{{ $footerLink->url }}">
                                 </div>
                             </div>
                         </div>
-                        <a href="{{ route('admin-panel.footer-link.index') }}" class="btn btn-lg btn-warning d-inline">Kembali</a>
+                        <a href="{{ route('admin-panel.district.index') }}" class="btn btn-lg btn-warning d-inline">Kembali</a>
                         <button class="btn btn-success" type="submit">Simpan</button>
                     </form>
                 </div>
