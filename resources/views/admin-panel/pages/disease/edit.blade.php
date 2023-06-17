@@ -1,6 +1,6 @@
 @extends('admin-panel.layout.app')
 
-@section('title', 'Tambah Berita')
+@section('title', 'Edit Data Penyakit Menular')
 
 @push('addon-style')
 	<link rel="stylesheet" href="{{ asset('panel-assets/node_modules/select2/dist/css/select2.min.css') }}">
@@ -13,11 +13,11 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Tambah Berita</h1>
+                <h1>Edit Data Penyakit Menular</h1>
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item"><a href="#">Dashboard</a></div>
-                    <div class="breadcrumb-item">Data Berita</div>
-                    <div class="breadcrumb-item active">Tambah Berita</div>
+                    <div class="breadcrumb-item">Data Penyakit Menular</div>
+                    <div class="breadcrumb-item active">Edit Data Penyakit Menular</div>
                 </div>
             </div>
             <div class="row">
@@ -35,41 +35,38 @@
                             </div>
                         </div>
                     @endif
-                    <form action="{{ route('admin-panel.news.store') }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('admin-panel.disease.update', $disease->id) }}" method="post" enctype="multipart/form-data">
                         @csrf
+                        @method('PUT')
                         <div class="card">
                             <div class="card-header">
-                                <h4>Masukkan Data Berita</h4>
+                                <h4>Edit Data Penyakit Menular</h4>
                             </div>
                             <div class="card-body">
 								<div class="d-flex justify-content-center">
-                                    <img src="https://via.placeholder.com/1920x780.jpg?text=1920x780" style="max-height:400px;" id="cover_image_preview" alt="Gambar Banner">
+                                    <img src="{{ asset($disease->cover_image) }}" style="max-height:400px;" id="cover_image_preview" alt="Gambar Banner">
                                 </div>
                                 <div class="form-group">
-                                    <label for="">Sampul Berita <span class="text-danger">*</span></label>
+                                    <label for="">Sampul Penyakit Menular <span class="text-danger">*</span></label>
                                     <input type="file" class="form-control" name="cover_image" id="cover_image" value="">
-                                    <small class="text-muted">Sampul Berita harus berupa file gambar(JPG, JPEG, PNG)</small>
+                                    <small class="text-muted">Sampul Penyakit Menular harus berupa file gambar(JPG, JPEG, PNG)</small>
                                 </div>
                                 <div class="form-group">
-                                    <label for="name">Judul Berita <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" placeholder="Masukkan judul berita"
-                                        name="title" id="title" value="{{ old('title') }}">
+                                    <label for="name">Nama Penyakit Menular <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" placeholder="Masukkan nama penyakit menular"
+                                        name="name" id="name" value="{{ $disease->name }}">
                                 </div>
 								<div class="form-group">
-									<label for="content">Konten Berita <span class="text-danger">*</span></label>
-									<textarea class="summernote" name="content" id="content">{{ old('content') }}</textarea>
+									<label for="description">Deskripsi <span class="text-danger">*</span></label>
+									<textarea class="summernote" name="description" id="description">{{ $disease->description }}</textarea>
 								</div>
                                 <div class="form-group">
-                                    <label for="status">Status<span class="text-danger">*</span></label>
-                                    <select name="status" id="status" class="form-control select2">
-										<option value="" selected hidden>--- Pilih Status ---</option>
-										<option value="draft">Diarsipkan</option>
-										<option value="published">Publikasi</option>
-									</select>
-                                </div>
+									<label for="symptoms">Gejala-gejala <span class="text-danger">*</span></label>
+									<textarea class="summernote" name="symptoms" id="symptoms">{{ $disease->symptoms }}</textarea>
+								</div>
                             </div>
                         </div>
-                        <a href="{{ route('admin-panel.news.index') }}" class="btn btn-lg btn-warning d-inline">Kembali</a>
+                        <a href="{{ route('admin-panel.disease.index') }}" class="btn btn-lg btn-warning d-inline">Kembali</a>
                         <button class="btn btn-success" type="submit">Simpan</button>
                     </form>
                 </div>
