@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\DiseaseController;
+use App\Http\Controllers\DistrictController;
+use App\Http\Controllers\HealthcareFacilitiesController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -28,6 +31,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::group(['prefix' => 'admin-panel'], function () {
+        Route::resource('diseases', DiseaseController::class, ['as' => 'admin-panel']);
+        Route::resource('districts', DistrictController::class, ['as' => 'admin-panel']);
+        Route::resource('healthcare-facilities', HealthcareFacilitiesController::class, ['as' => 'admin-panel']);
+    });
 });
 
 require __DIR__.'/auth.php';
