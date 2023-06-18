@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Disease;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Validator;
 
 class DiseaseController extends Controller
 {
@@ -63,7 +64,7 @@ class DiseaseController extends Controller
         $data['cover_image'] = Storage::url($path);
         Disease::create($data);
 
-        return redirect()->route('admin-panel.disease.index')->with('success', 'Penyakit berhasil ditambahkan!');
+        return redirect()->route('admin-panel.diseases.index')->with('success', 'Penyakit berhasil ditambahkan!');
     }
 
     /**
@@ -121,7 +122,7 @@ class DiseaseController extends Controller
 
         $disease->update($data);
 
-        return redirect()->route('admin-panel.disease.index')->with('success', 'Penyakit berhasil diedit!');
+        return redirect()->route('admin-panel.diseases.index')->with('success', 'Penyakit berhasil diedit!');
     }
 
     /**

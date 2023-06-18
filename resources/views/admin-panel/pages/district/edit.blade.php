@@ -35,7 +35,7 @@
                             </div>
                         </div>
                     @endif
-                    <form action="{{ route('admin-panel.district.update', $footerLink->id) }}" method="post">
+                    <form action="{{ route('admin-panel.districts.update', $district->id) }}" method="post">
                         @csrf
 						@method('PUT')
                         <div class="card">
@@ -45,11 +45,11 @@
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="name">Nama Kecamatan <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="name" id="name" value="{{ $footerLink->name }}">
+                                    <input type="text" class="form-control" name="name" id="name" value="{{ $district->name }}">
                                 </div>
                             </div>
                         </div>
-                        <a href="{{ route('admin-panel.district.index') }}" class="btn btn-lg btn-warning d-inline">Kembali</a>
+                        <a href="{{ route('admin-panel.districts.index') }}" class="btn btn-lg btn-warning d-inline">Kembali</a>
                         <button class="btn btn-success" type="submit">Simpan</button>
                     </form>
                 </div>

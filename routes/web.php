@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminPanelController;
 use App\Http\Controllers\DiseaseController;
 use App\Http\Controllers\DistrictController;
 use App\Http\Controllers\HealthcareFacilitiesController;
@@ -33,8 +34,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::group(['prefix' => 'admin-panel'], function () {
+        Route::get('/dashboard', [AdminPanelController::class, 'index'])->name('admin-panel.dashboard');
+
         Route::resource('diseases', DiseaseController::class, ['as' => 'admin-panel']);
+
         Route::resource('districts', DistrictController::class, ['as' => 'admin-panel']);
+
         Route::resource('healthcare-facilities', HealthcareFacilitiesController::class, ['as' => 'admin-panel']);
     });
 });

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\District;
 use Illuminate\Http\Request;
+use Validator;
 
 class DistrictController extends Controller
 {
@@ -47,7 +48,7 @@ class DistrictController extends Controller
         $data = $request->all();
         District::create($data);
 
-        return redirect()->route('admin-panel.district.index')->with('success', 'Kecamatan berhasil ditambahkan!');
+        return redirect()->route('admin-panel.districts.index')->with('success', 'Kecamatan berhasil ditambahkan!');
     }
 
     /**
@@ -88,7 +89,7 @@ class DistrictController extends Controller
         $data = $request->all();
         $district->update($data);
 
-        return redirect()->route('admin-panel.district.index')->with('success', 'Kecamatan berhasil diedit!');
+        return redirect()->route('admin-panel.districts.index')->with('success', 'Kecamatan berhasil diedit!');
     }
 
     /**

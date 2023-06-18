@@ -20,7 +20,7 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <a href="{{ route('admin-panel.disease.create') }}" class="btn btn-icon icon-left btn-primary mb-4"><i
+                    <a href="{{ route('admin-panel.diseases.create') }}" class="btn btn-icon icon-left btn-primary mb-4"><i
                             class="fas fa-plus"></i>Tambah Penyakit Menular</a>
                 </div>
             </div>
@@ -37,6 +37,7 @@
                                         <th class="text-center">No</th>
 										<th class="text-center">Sampul Penyakit Menular</th>
                                         <th>Nama Penyakit Menular</th>
+                                        <th>Deskripsi</th>
                                         <th class="text-center">Action</th>
                                     </tr>
                                 </thead>
@@ -48,13 +49,13 @@
 												<img src="{{ asset($data->cover_image) }}" class="img-responsive" alt="Carousel" width="300px"/>
 											</td>
                                             <td>{{ $data->name }}</td>
-                                            <td>{{ \Str::limit($data->description, 20) }}</td>
+                                            <td>{!! \Str::limit($data->description, 20) !!}</td>
                                             <td class="text-center">
-                                                <a href="{{ route('admin-panel.disease.edit', $data->id) }} " class="btn btn-warning"
+                                                <a href="{{ route('admin-panel.diseases.edit', $data->id) }} " class="btn btn-warning"
                                                     data-toggle="tooltip" data-placement="top" title="Edit">
                                                     <i class="fa fa-pencil-alt"></i>
                                                 </a>
-                                                <form action="{{ route('admin-panel.disease.destroy', $data->id) }}" method="POST" class="d-inline swal-confirm">
+                                                <form action="{{ route('admin-panel.diseases.destroy', $data->id) }}" method="POST" class="d-inline swal-confirm">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button class="btn btn-danger swal-confirm" type="submit"

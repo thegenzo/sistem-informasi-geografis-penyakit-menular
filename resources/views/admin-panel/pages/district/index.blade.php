@@ -20,7 +20,7 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <a href="{{ route('admin-panel.district.create') }}" class="btn btn-icon icon-left btn-primary mb-4"><i
+                    <a href="{{ route('admin-panel.districts.create') }}" class="btn btn-icon icon-left btn-primary mb-4"><i
                             class="fas fa-plus"></i>Tambah Kecamatan</a>
                 </div>
             </div>
@@ -45,11 +45,11 @@
                                             <td class="text-center">{{ $loop->iteration }}</td>
                                             <td>{{ $data->name }}</td>
                                             <td class="text-center">
-                                                <a href="{{ route('admin-panel.district.edit', $data->id) }} " class="btn btn-warning"
+                                                <a href="{{ route('admin-panel.districts.edit', $data->id) }} " class="btn btn-warning"
                                                     data-toggle="tooltip" data-placement="top" title="Edit">
                                                     <i class="fa fa-pencil-alt"></i>
                                                 </a>
-                                                <form action="{{ route('admin-panel.district.destroy', $data->id) }}" method="POST" class="d-inline swal-confirm">
+                                                <form action="{{ route('admin-panel.districts.destroy', $data->id) }}" method="POST" class="d-inline swal-confirm">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button class="btn btn-danger swal-confirm" type="submit"

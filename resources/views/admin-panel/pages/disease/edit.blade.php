@@ -35,7 +35,7 @@
                             </div>
                         </div>
                     @endif
-                    <form action="{{ route('admin-panel.disease.update', $disease->id) }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('admin-panel.diseases.update', $disease->id) }}" method="post" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="card">
@@ -66,7 +66,7 @@
 								</div>
                             </div>
                         </div>
-                        <a href="{{ route('admin-panel.disease.index') }}" class="btn btn-lg btn-warning d-inline">Kembali</a>
+                        <a href="{{ route('admin-panel.diseases.index') }}" class="btn btn-lg btn-warning d-inline">Kembali</a>
                         <button class="btn btn-success" type="submit">Simpan</button>
                     </form>
                 </div>
