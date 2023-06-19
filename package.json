@@ -5,6 +5,9 @@
         "dev": "vite",
         "build": "vite build"
     },
+    "dependencies": {
+        "leaflet": "^1.7.1"
+    },
     "devDependencies": {
         "@tailwindcss/forms": "^0.5.2",
         "alpinejs": "^3.4.2",

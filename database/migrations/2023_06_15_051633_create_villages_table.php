@@ -14,8 +14,9 @@ return new class extends Migration
     {
         Schema::create('villages', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(District::class);
+            $table->foreignIdFor(District::class)->constrained();
             $table->string('name');
+            $table->json('coordinates');
             $table->timestamps();
         });
     }

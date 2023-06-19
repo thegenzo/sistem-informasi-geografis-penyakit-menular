@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Village;
 use Illuminate\Http\Request;
+use Validator;
 
 class VillageController extends Controller
 {
@@ -12,7 +13,9 @@ class VillageController extends Controller
      */
     public function index()
     {
-        //
+        $village = Village::all();
+
+        return view('admin-panel.pages.village.index', compact('village'));
     }
 
     /**
@@ -20,7 +23,7 @@ class VillageController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin-panel.pages.village.create');
     }
 
     /**
@@ -28,7 +31,28 @@ class VillageController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = [
+            'district_id'   => 'required',
+            'name'          => 'required',
+            'coordinates'   => 'required',
+        ];
+
+        $messages = [
+            'district_id.required'  => 'Nama kecamatan wajib diisi',
+            'name.required'         => 'Nama kelurahan wajib diisi',
+            'coordinates.required'  => 'Koordinat wilayah wajib diisi',
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput($request->all());
+        }
+
+        $data = $request->all();
+        Village::create($data);
+
+        return redirect()->route('admin-panel.villages.index')->with('success', 'Data Kelurahan berhasil ditambahkan!');
     }
 
     /**
@@ -44,7 +68,9 @@ class VillageController extends Controller
      */
     public function edit(Village $village)
     {
-        //
+        // $data = $village->coordinates['geometry']['coordinates'][0];
+        // return response()->json($data);
+        return view('admin-panel.pages.village.edit', compact('village'));
     }
 
     /**
@@ -52,7 +78,28 @@ class VillageController extends Controller
      */
     public function update(Request $request, Village $village)
     {
-        //
+        $rules = [
+            'district_id'   => 'required',
+            'name'          => 'required',
+            'coordinates'   => 'required',
+        ];
+
+        $messages = [
+            'district_id.required'  => 'Nama kecamatan wajib diisi',
+            'name.required'         => 'Nama kelurahan wajib diisi',
+            'coordinates.required'  => 'Koordinat wilayah wajib diisi',
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput($request->all());
+        }
+
+        $data = $request->all();
+        $village->update($data);
+
+        return redirect()->route('admin-panel.villages.index')->with('success', 'Data Kelurahan berhasil diedit!');
     }
 
     /**
@@ -60,6 +107,8 @@ class VillageController extends Controller
      */
     public function destroy(Village $village)
     {
-        //
+        $village->delete();
+
+        return redirect()->back()->with('success', 'Data kelurahan berhasil dihapus!');
     }
 }

@@ -22,6 +22,8 @@
                 <ul class="dropdown-menu">
                     <li class="{{ Route::is('admin-panel.districts.*') ? ' active' : '' }}"><a class="nav-link"
                             href="{{ route('admin-panel.districts.index') }}">Kecamatan</a></li>
+                    <li class="{{ Route::is('admin-panel.villages.*') ? ' active' : '' }}"><a class="nav-link"
+                        href="{{ route('admin-panel.villages.index') }}">Kelurahan</a></li>
                 </ul>
             </li>
         </ul>

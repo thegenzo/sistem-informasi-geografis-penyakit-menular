@@ -1,6 +1,6 @@
 @extends('admin-panel.layout.app')
 
-@section('title', 'Pengumuman')
+@section('title', 'Kelurahan')
 
 @push('addon-style')
     <!-- CSS Libraries -->
@@ -13,55 +13,47 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Pengumuman</h1>
+                <h1>Kelurahan</h1>
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item"><a href="#">Dashboard</a></div>
-                    <div class="breadcrumb-item active">Pengumuman</div>
+                    <div class="breadcrumb-item active">Kelurahan</div>
                 </div>
             </div>
             <div class="row">
                 <div class="col">
-                    <a href="{{ route('admin-panel.announcement.create') }}" class="btn btn-icon icon-left btn-primary mb-4"><i
-                            class="fas fa-plus"></i>Tambah Pengumuman</a>
+                    <a href="{{ route('admin-panel.villages.create') }}" class="btn btn-icon icon-left btn-primary mb-4"><i
+                            class="fas fa-plus"></i>Tambah Kelurahan</a>
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-12 col-md-6 col-12 col-sm-6">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Pengumuman</h4>
+                            <h4>Kelurahan</h4>
                         </div>
                         <div class="card-body">
                             <table class="table table-striped table-hover" id="datatable">
                                 <thead>
                                     <tr>
                                         <th class="text-center">No</th>
-                                        <th>Judul Pengumuman</th>
-                                        <th>Penulis</th>
-                                        <th class="text-center">Status</th>
+                                        <th>Kecamatan</th>
+                                        <th>Kelurahan</th>
                                         <th class="text-center">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($announcement as $data)
+                                    @forelse ($village as $data)
                                         <tr>
                                             <td class="text-center">{{ $loop->iteration }}</td>
-                                            <td>{{ $data->title }}</td>
-                                            <td>{{ $data->user->name }}</td>
+                                            <td>{{ $data->district->name }}</td>
+                                            <td>{{ $data->name }}</td>
                                             <td class="text-center">
-                                                @if ($data->status == 'draft')
-                                                    <span class="badge badge-danger">Diarsipkan</span>
-                                                @else
-                                                    <span class="badge badge-success">Dipublikasi</span>
-                                                @endif
-                                            </td>
-                                            <td class="text-center">
-                                                <a href="{{ route('admin-panel.announcement.edit', $data->id) }} "
+                                                <a href="{{ route('admin-panel.villages.edit', $data->id) }} "
                                                     class="btn btn-warning" data-toggle="tooltip" data-placement="top"
                                                     title="Edit">
                                                     <i class="fa fa-pencil-alt"></i>
                                                 </a>
-                                                <form action="{{ route('admin-panel.announcement.destroy', $data->id) }}"
+                                                <form action="{{ route('admin-panel.villages.destroy', $data->id) }}"
                                                     method="POST" class="d-inline swal-confirm">
                                                     @csrf
                                                     @method('DELETE')
@@ -74,8 +66,8 @@
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="5" style="font-weight: bold; font-size: 18px;"
-                                                class="text-center">Data Pengumuman Kosong</td>
+                                            <td colspan="4" style="font-weight: bold; font-size: 18px;"
+                                                class="text-center">Data Kelurahan Kosong</td>
                                         </tr>
                                     @endforelse
                                 </tbody>
@@ -102,8 +94,8 @@
                 var id = $(this).data("id");
                 event.preventDefault();
                 Swal.fire({
-                    title: 'Yakin Hapus Pengumuman?',
-                    text: "Pengumuman yang terhapus tidak dapat dikembalikan",
+                    title: 'Yakin Hapus Kelurahan?',
+                    text: "Kelurahan yang terhapus tidak dapat dikembalikan",
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
