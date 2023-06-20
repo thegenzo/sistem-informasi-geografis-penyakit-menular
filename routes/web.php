@@ -40,6 +40,7 @@ Route::middleware('auth')->group(function () {
 
         Route::resource('districts', DistrictController::class, ['as' => 'admin-panel']);
 
+        Route::get('/district-polygon/{id}', [HealthcareFacilitiesController::class, 'getDistrictPolygon']);
         Route::resource('healthcare-facilities', HealthcareFacilitiesController::class, ['as' => 'admin-panel']);
 
     });

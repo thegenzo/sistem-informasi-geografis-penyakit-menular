@@ -17,13 +17,13 @@
                     href="{{ route('admin-panel.diseases.index') }}"><i class="fas fa-heartbeat"></i><span>Data Penyakit</span></a>
             </li>
             <li
-                class="dropdown {{ Route::is('admin-panel.districts.*') ? ' active' : '' }}">
+                class="dropdown {{ Route::is('admin-panel.districts.*') || Route::is('admin-panel.healthcare-facilities.*') ? ' active' : '' }}">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-file"></i><span>Data Wilayah</span></a>
                 <ul class="dropdown-menu">
-                    <li class="{{ Route::is('admin-panel.districts.*') ? ' active' : '' }}"><a class="nav-link"
+                    <li class="{{ Route::is('admin-panel.districts.*') ? 'active' : '' }}"><a class="nav-link"
                             href="{{ route('admin-panel.districts.index') }}">Kecamatan</a></li>
-                    {{-- <li class="{{ Route::is('admin-panel.villages.*') ? ' active' : '' }}"><a class="nav-link"
-                        href="{{ route('admin-panel.villages.index') }}">Kelurahan</a></li> --}}
+                    <li class="{{ Route::is('admin-panel.healthcare-facilities.*') ? 'active' : '' }}"><a class="nav-link"
+                        href="{{ route('admin-panel.healthcare-facilities.index') }}">FASKES</a></li>
                 </ul>
             </li>
         </ul>

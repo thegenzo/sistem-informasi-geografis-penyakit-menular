@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\District;
 use App\Models\HealthcareFacilities;
 use Illuminate\Http\Request;
 use Validator;
@@ -130,5 +131,13 @@ class HealthcareFacilitiesController extends Controller
         $healthcareFacilities->delete();
 
         return redirect()->back()->with('success', 'Fasilitas kesehatan berhasil dihapus!');
+    }
+
+    public function getDistrictPolygon($id)
+    {
+        $district = District::where('id', $id)->first();
+        $coordinates = $district->coordinates;
+        
+        return $coordinates;
     }
 }

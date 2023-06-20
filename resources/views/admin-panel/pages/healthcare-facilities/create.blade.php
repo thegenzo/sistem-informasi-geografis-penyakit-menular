@@ -1,6 +1,6 @@
 @extends('admin-panel.layout.app')
 
-@section('title', 'Tambah Kecamatan')
+@section('title', 'Tambah FASKES')
 
 @push('addon-style')
     <link rel="stylesheet" href="{{ asset('panel-assets/node_modules/select2/dist/css/select2.min.css') }}">
@@ -28,11 +28,11 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Tambah Kecamatan</h1>
+                <h1>Tambah FASKES</h1>
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item"><a href="#">Dashboard</a></div>
-                    <div class="breadcrumb-item">Data Kecamatan</div>
-                    <div class="breadcrumb-item active">Tambah Kecamatan</div>
+                    <div class="breadcrumb-item">Data FASKES</div>
+                    <div class="breadcrumb-item active">Tambah FASKES</div>
                 </div>
             </div>
             <div class="row">
@@ -50,23 +50,29 @@
                             </div>
                         </div>
                     @endif
-                    <form action="{{ route('admin-panel.districts.store') }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('admin-panel.healthcare-facilities.store') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="card">
                             <div class="card-header">
-                                <h4>Masukkan Data Kecamatan</h4>
+                                <h4>Masukkan Data FASKES</h4>
                             </div>
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="name">Nama Kecamatan <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" placeholder="Masukkan nama kecamatan"
-                                        name="name" id="name" value="{{ old('name') }}">
+                                    <label for="name">Kecamatan <span class="text-danger">*</span></label>
+                                    <select name="district_id" id="district_id" class="form-control select2">
+										<option value="" hidden>--- Pilih Kecamatan ---</option>
+										@forelse (\App\Models\District::all() as $data)
+										<option value="{{ $data->id }}">{{ $data->name }}</option>
+										@empty
+										<option value="" disabled>Data Kecamatan Kosong</option>
+										@endforelse
+									</select>
                                 </div>
                                 <div id="map"></div>
                                 <input type="hidden" name="coordinates" id="coordinates">
                             </div>
                         </div>
-                        <a href="{{ route('admin-panel.districts.index') }}" class="btn btn-lg btn-warning d-inline">Kembali</a>
+                        <a href="{{ route('admin-panel.healthcare-facilities.index') }}" class="btn btn-lg btn-warning d-inline">Kembali</a>
                         <button class="btn btn-success" type="submit">Simpan</button>
                     </form>
                 </div>
@@ -84,50 +90,62 @@
             attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
             maxZoom: 18,
         }).addTo(map);
-
+    
         var drawnItems = new L.FeatureGroup();
         map.addLayer(drawnItems);
+    
         var drawControl = new L.Control.Draw({
-            position: 'topright',
             draw: {
-                polygon: {
-                    shapeOptions: {
-                        color: 'purple' //polygons being drawn will be purple color
-                    },
-                    allowIntersection: false,
-                    drawError: {
-                        color: 'orange',
-                        timeout: 1000
-                    },
-                    showArea: true, //the area of the polygon will be displayed as it is drawn.
-                    metric: false,
-                    repeatMode: false
-                },
-                marker: false,
+                polygon: false,
+                marker: true,
                 polyline: false,
                 rectangle: false,
                 circle: false,
-                circlemaker: false,
             },
             edit: {
-                featureGroup: drawnItems
-            }
+                featureGroup: drawnItems,
+                remove: false,
+            },
         });
         map.addControl(drawControl);
-        map.on('draw:created', function(e) {
-            var type = e.layerType,
-                layer = e.layer;
-            drawnItems.addLayer(layer);
-
-            var newCoordinates = layer.getLatLngs()[0].map(function(latLng) {
-                return [latLng.lat, latLng.lng];
+    
+        $('#map').hide();
+    
+        $('#district_id').on('change', function () {
+            var selectedId = $(this).val();
+    
+            $.ajax({
+                url: '/admin-panel/district-polygon/' + selectedId,
+                method: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data); // Check the content of the data object
+    
+                    if (data && Array.isArray(data) && data.length > 0) {
+                        var coordinates = data; // Assign the data array to coordinates
+                        console.log(coordinates); // Check the content of the coordinates array
+    
+                        drawnItems.clearLayers();
+    
+                        var polygon = L.polygon(coordinates, { color: 'red' }).addTo(drawnItems); // Set the color of the polygon
+                        map.fitBounds(polygon.getBounds());
+    
+                        $('#coordinates').val(coordinates);
+    
+                        $('#map').show();
+                    } else {
+                        console.error('Invalid or empty coordinates data');
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
             });
-
-            // Reverse the order of coordinates (latitude first, longitude last)
-            newCoordinates.reverse();
-
-
-            $('#coordinates').val(JSON.stringify(newCoordinates));
         });
+    
     </script>
+    
+    
+    
+    
 @endpush
