@@ -76,9 +76,10 @@ class HealthcareFacilitiesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(HealthcareFacilities $healthcareFacilities)
+    public function edit(HealthcareFacilities $healthcareFacilities, $id)
     {
-        return view('admin-panel.healthcare-facilities.edit', compact('healthcareFacilities'));
+        $healthcareFacilities = HealthcareFacilities::find($id);
+        return view('admin-panel.pages.healthcare-facilities.edit', compact('healthcareFacilities'));
     }
 
     /**
@@ -122,12 +123,13 @@ class HealthcareFacilitiesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(HealthcareFacilities $healthcareFacilities)
+    public function destroy(HealthcareFacilities $healthcareFacilities, $id)
     {
         if($healthcareFacilities->cases()->count() > 0) {
             return redirect()->back()->with('failed', 'Fasilitas kesehatan memiliki data relasi dengan kasus!');
         }
         
+        $healthcareFacilities = HealthcareFacilities::find($id);
         $healthcareFacilities->delete();
 
         return redirect()->back()->with('success', 'Fasilitas kesehatan berhasil dihapus!');

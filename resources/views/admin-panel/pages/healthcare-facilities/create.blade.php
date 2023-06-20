@@ -68,7 +68,43 @@
 										@endforelse
 									</select>
                                 </div>
+                                <div class="form-group">
+                                    <label for="name">Nama <span class="text-danger">*</span></label>
+                                    <input type="text" name="name" id="name" class="form-control" value="{{ old('name') }}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="address">Alamat <span class="text-danger">*</span></label>
+                                    <textarea name="address" id="address" cols="30" rows="30" class="form-control">{{ old('address') }}</textarea>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="type">Tipe FASKES <span class="text-danger">*</span></label>
+                                            <select name="type" id="type" class="form-control select2">
+                                                <option value="" hidden>--- Pilih Tipe ---</option>
+                                                <option value="public_health_center">PUSKESMAS</option>
+                                                <option value="hospital">Rumah Sakit</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="contact_information">Informasi Kontak <span class="text-danger">*</span></label>
+                                            <input type="number" name="contact_information" id="contact_information" class="form-control" value="{{ old('contact_information') }}">
+                                        </div>
+                                    </div>
+                                </div>
                                 <div id="map"></div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label for="latitude">Latitude</label>
+                                        <input type="text" name="latitude" id="latitude" class="form-control" readonly>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="longitude">Longitude</label>
+                                        <input type="text" name="longitude" id="longitude" class="form-control" readonly>
+                                    </div>
+                                </div>
                                 <input type="hidden" name="coordinates" id="coordinates">
                             </div>
                         </div>
@@ -109,8 +145,10 @@
         });
         map.addControl(drawControl);
     
+        // hide map on first initial
         $('#map').hide();
     
+        // triggering show map when district_id is changing
         $('#district_id').on('change', function () {
             var selectedId = $(this).val();
     
@@ -123,7 +161,6 @@
     
                     if (data && Array.isArray(data) && data.length > 0) {
                         var coordinates = data; // Assign the data array to coordinates
-                        console.log(coordinates); // Check the content of the coordinates array
     
                         drawnItems.clearLayers();
     
@@ -141,6 +178,24 @@
                     console.error(error);
                 }
             });
+        });
+
+        map.on('click', function (e) {
+            var marker;
+
+            map.on('click', function (e) {
+            if (marker) {
+                map.removeLayer(marker);
+            }
+
+            marker = L.marker(e.latlng).addTo(map).bindPopup('Lokasi FASKES: ' + e.latlng.toString()).openPopup();
+            });
+            var latitudeInput = document.getElementById('latitude');
+            var longitudeInput = document.getElementById('longitude');
+
+            var latLng = e.latlng;
+            latitudeInput.value = latLng.lat;
+            longitudeInput.value = latLng.lng;
         });
     
     </script>

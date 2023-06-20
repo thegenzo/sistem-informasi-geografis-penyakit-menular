@@ -42,7 +42,6 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/district-polygon/{id}', [HealthcareFacilitiesController::class, 'getDistrictPolygon']);
         Route::resource('healthcare-facilities', HealthcareFacilitiesController::class, ['as' => 'admin-panel']);
-
     });
 });
 

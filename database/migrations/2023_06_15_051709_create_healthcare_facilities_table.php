@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('longitude');
             $table->text('latitude');
             $table->text('address');
+            $table->enum('type', ['public_health_center', 'hospital']);
             $table->text('contact_information');
             $table->timestamps();
         });
