@@ -11,7 +11,7 @@
             </a>
         </div>
         <ul class="sidebar-menu">
-            <li class="{{ Route::is('admin-panel.dashboard') ? active : '' }}"><a class="nav-link"
+            <li class="{{ Route::is('admin-panel.dashboard') ? 'active' : '' }}"><a class="nav-link"
                     href="{{ route('admin-panel.dashboard') }}"><i class="fas fa-home"></i><span>Dashboard</span></a></li>
             <li class="{{ Route::is('admin-panel.diseases.*') ? 'active' : '' }}"><a class="nav-link"
                     href="{{ route('admin-panel.diseases.index') }}"><i class="fas fa-heartbeat"></i><span>Data Penyakit</span></a>
