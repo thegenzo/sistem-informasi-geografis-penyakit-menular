@@ -10,6 +10,12 @@ class District extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name'
+        'name',
+        'coordinates'
     ];
+
+    public function healthcare_facilities()
+    {
+        return $this->hasMany(HealthcareFacilities::class);
+    }
 }

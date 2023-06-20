@@ -10,10 +10,22 @@ class HealthcareFacilities extends Model
     use HasFactory;
 
     protected $fillable = [
+        'district_id',
         'name',
         'longitude',
         'latitude',
         'address',
+        'type',
         'contact_information'
     ];
+
+    public function district()
+    {
+        return $this->belongsTo(District::class);
+    }
+
+    public function cases()
+    {
+        return $this->hasMany(Cases::class);
+    }
 }

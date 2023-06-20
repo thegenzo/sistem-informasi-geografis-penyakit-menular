@@ -32,18 +32,22 @@ class HealthcareFacilitiesController extends Controller
     public function store(Request $request)
     {
         $rules = [
+            'district_id'               => 'required',
             'name'                      => 'required',
             'longitude'                 => 'required',
             'latitude'                  => 'required',
             'address'                   => 'required',
+            'type'                      => 'required',
             'contact_information'       => 'required',
         ];
 
         $messages = [
+            'district_id.required'              => 'Kecamatan wajib diisi',
             'name.required'                     => 'Nama fasilitas kesehatan wajib diisi',
             'longitude.required'                => 'Longitude wajib diisi',
             'latitude.required'                 => 'Latitude wajib diisi',
             'address.required'                  => 'Alamat wajib diisi',
+            'type.required'                     => 'Tipe fasilitas kesehatan wajib diisi',
             'contact_information.required'      => 'Informati kontak wajib diisi',
         ];
 
@@ -54,6 +58,7 @@ class HealthcareFacilitiesController extends Controller
         }
 
         $data = $request->all();
+        $data['district_id'] = $request->district_id;
         HealthcareFacilities::create($data);
 
         return redirect()->route('admin-panel.healthcare-facilities.index')->with('success', 'Fasilitas kesehatan berhasil ditambahkan!');
@@ -81,18 +86,22 @@ class HealthcareFacilitiesController extends Controller
     public function update(Request $request, HealthcareFacilities $healthcareFacilities)
     {
         $rules = [
+            'district_id'               => 'required',
             'name'                      => 'required',
             'longitude'                 => 'required',
             'latitude'                  => 'required',
             'address'                   => 'required',
+            'type'                      => 'required',
             'contact_information'       => 'required',
         ];
 
         $messages = [
+            'district_id.required'              => 'Kecamatan wajib diisi',
             'name.required'                     => 'Nama fasilitas kesehatan wajib diisi',
             'longitude.required'                => 'Longitude wajib diisi',
             'latitude.required'                 => 'Latitude wajib diisi',
             'address.required'                  => 'Alamat wajib diisi',
+            'type.required'                     => 'Tipe fasilitas kesehatan wajib diisi',
             'contact_information.required'      => 'Informati kontak wajib diisi',
         ];
 
@@ -103,6 +112,7 @@ class HealthcareFacilitiesController extends Controller
         }
 
         $data = $request->all();
+        $data['district_id'] = $request->district_id;
         $healthcareFacilities->update($data);
 
         return redirect()->route('admin-panel.healthcare-facilities.index')->with('success', 'Fasilitas kesehatan berhasil diedit!'); 
@@ -113,6 +123,10 @@ class HealthcareFacilitiesController extends Controller
      */
     public function destroy(HealthcareFacilities $healthcareFacilities)
     {
+        if($healthcareFacilities->cases()->count() > 0) {
+            return redirect()->back()->with('failed', 'Fasilitas kesehatan memiliki data relasi dengan kasus!');
+        }
+        
         $healthcareFacilities->delete();
 
         return redirect()->back()->with('success', 'Fasilitas kesehatan berhasil dihapus!');

@@ -33,10 +33,12 @@ class DistrictController extends Controller
     {
         $rules = [
             'name'          => 'required',
+            'coordinates'   => 'required',
         ];
 
         $messages = [
-            'name.required' => 'Nama kecamatan wajib diisi',
+            'name.required'         => 'Nama kecamatan wajib diisi',
+            'coordinates.required'  => 'Koordinat wilayah wajib diisi'
         ];
 
         $validator = Validator::make($request->all(), $rules, $messages);
@@ -74,10 +76,12 @@ class DistrictController extends Controller
     {
         $rules = [
             'name'          => 'required',
+            'coordinates'   => 'required',
         ];
 
         $messages = [
-            'name.required' => 'Nama kecamatan wajib diisi',
+            'name.required'         => 'Nama kecamatan wajib diisi',
+            'coordinates.required'  => 'Koordinat wilayah wajib diisi'
         ];
 
         $validator = Validator::make($request->all(), $rules, $messages);
@@ -97,6 +101,9 @@ class DistrictController extends Controller
      */
     public function destroy(District $district)
     {
+        if($district->healthcare_facilities()->count() > 0) {
+            return redirect()->back()->with('failed', 'Kecamatan ini memiliki data relasi dengan Fasilitas Kesehatan!');
+        }
         $district->delete();
         
         return redirect()->back()->with('success', 'Kecamatan berhasil ditambahkan!');

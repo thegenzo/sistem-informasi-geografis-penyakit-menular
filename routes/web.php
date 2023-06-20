@@ -5,7 +5,6 @@ use App\Http\Controllers\DiseaseController;
 use App\Http\Controllers\DistrictController;
 use App\Http\Controllers\HealthcareFacilitiesController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\VillageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -42,8 +41,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('districts', DistrictController::class, ['as' => 'admin-panel']);
 
         Route::resource('healthcare-facilities', HealthcareFacilitiesController::class, ['as' => 'admin-panel']);
-        
-        Route::resource('villages', VillageController::class, ['as' => 'admin-panel']);
+
     });
 });
 

@@ -11,10 +11,10 @@
             </a>
         </div>
         <ul class="sidebar-menu">
-            <li class="{{ Route::is('admin-panel.dashboard') ? ' active' : '' }}"><a class="nav-link"
-                    href="{{ route('admin-panel.dashboard') }}"><i class="fa fa-home"></i>Dashboard</a></li>
-            <li class="{{ Route::is('admin-panel.diseases.*') ? ' active' : '' }}"><a class="nav-link"
-                    href="{{ route('admin-panel.diseases.index') }}"><i class="fa fa-heartbeat"></i>Data Penyakit</a>
+            <li class="{{ Route::is('admin-panel.dashboard') ? active : '' }}"><a class="nav-link"
+                    href="{{ route('admin-panel.dashboard') }}"><i class="fas fa-home"></i><span>Dashboard</span></a></li>
+            <li class="{{ Route::is('admin-panel.diseases.*') ? 'active' : '' }}"><a class="nav-link"
+                    href="{{ route('admin-panel.diseases.index') }}"><i class="fas fa-heartbeat"></i><span>Data Penyakit</span></a>
             </li>
             <li
                 class="dropdown {{ Route::is('admin-panel.districts.*') ? ' active' : '' }}">
@@ -22,8 +22,8 @@
                 <ul class="dropdown-menu">
                     <li class="{{ Route::is('admin-panel.districts.*') ? ' active' : '' }}"><a class="nav-link"
                             href="{{ route('admin-panel.districts.index') }}">Kecamatan</a></li>
-                    <li class="{{ Route::is('admin-panel.villages.*') ? ' active' : '' }}"><a class="nav-link"
-                        href="{{ route('admin-panel.villages.index') }}">Kelurahan</a></li>
+                    {{-- <li class="{{ Route::is('admin-panel.villages.*') ? ' active' : '' }}"><a class="nav-link"
+                        href="{{ route('admin-panel.villages.index') }}">Kelurahan</a></li> --}}
                 </ul>
             </li>
         </ul>
