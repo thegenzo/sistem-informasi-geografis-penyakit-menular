@@ -64,6 +64,10 @@
                                     <label for="name">Nama Kecamatan <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" name="name" id="name" value="{{ $district->name }}">
                                 </div>
+                                <div class="form-group">
+                                    <label for="">Warna Wilayah</label>
+                                    <input type="color" name="color" class="form-control" id="colorPicker" value="{{ $district->color }}">
+                                </div>
                                 <div id="map"></div>
                                 <input type="hidden" name="coordinates" id="coordinates" value="{{ $district->coordinates }}">
                             </div>
@@ -90,10 +94,11 @@
         }).addTo(map);
 
         var drawnItems = new L.FeatureGroup();
+        var polyColor = $('#colorPicker').val();
         map.addLayer(drawnItems);
 
         var coordinates = JSON.parse(document.getElementById('coordinates').value);
-        var polygon = L.polygon(coordinates);
+        var polygon = L.polygon(coordinates, {color: polyColor });
         drawnItems.addLayer(polygon);
         map.fitBounds(polygon.getBounds());
 

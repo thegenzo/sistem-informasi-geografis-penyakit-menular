@@ -11,7 +11,8 @@ class District extends Model
 
     protected $fillable = [
         'name',
-        'coordinates'
+        'coordinates',
+        'color'
     ];
 
     public function healthcare_facilities()

@@ -62,6 +62,10 @@
                                     <input type="text" class="form-control" placeholder="Masukkan nama kecamatan"
                                         name="name" id="name" value="{{ old('name') }}">
                                 </div>
+                                <div class="form-group">
+                                    <label for="">Warna Wilayah</label>
+                                    <input type="color" name="color" class="form-control" id="colorPicker" value="#3388ff">
+                                </div>
                                 <div id="map"></div>
                                 <input type="hidden" name="coordinates" id="coordinates">
                             </div>
@@ -92,7 +96,7 @@
             draw: {
                 polygon: {
                     shapeOptions: {
-                        color: 'purple' //polygons being drawn will be purple color
+                        color: $('#colorPicker').val() //polygons being drawn will be purple color
                     },
                     allowIntersection: false,
                     drawError: {
@@ -128,6 +132,20 @@
 
 
             $('#coordinates').val(JSON.stringify(newCoordinates));
+        });
+
+        // Color picker change event
+        $('#colorPicker').on('change', function () {
+            var color = $(this).val();
+
+            // Update the polygon draw color
+            drawControl.setDrawingOptions({
+                polygon: {
+                    shapeOptions: {
+                        color: color,
+                    },
+                },
+            });
         });
     </script>
 @endpush
