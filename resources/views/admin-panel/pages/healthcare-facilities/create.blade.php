@@ -130,21 +130,6 @@
         var drawnItems = new L.FeatureGroup();
         map.addLayer(drawnItems);
     
-        var drawControl = new L.Control.Draw({
-            draw: {
-                polygon: false,
-                marker: true,
-                polyline: false,
-                rectangle: false,
-                circle: false,
-            },
-            edit: {
-                featureGroup: drawnItems,
-                remove: false,
-            },
-        });
-        map.addControl(drawControl);
-    
         // hide map on first initial
         $('#map').hide();
     
