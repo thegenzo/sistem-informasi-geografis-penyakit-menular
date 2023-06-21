@@ -26,6 +26,10 @@
                         href="{{ route('admin-panel.healthcare-facilities.index') }}">FASKES</a></li>
                 </ul>
             </li>
+            <li class="{{ Route::is('admin-panel.cases.*') ? 'active' : '' }}"><a class="nav-link"
+                href="{{ route('admin-panel.cases.index') }}"><i class="fas fa-user-nurse"></i><span>Data Kasus</span></a>
+            </li>
+        </li>
         </ul>
         <div class="mt-4 mb-4 p-3 hide-sidebar-mini">
             <a href="{{ route('logout') }}" class="btn btn-primary btn-lg btn-block btn-icon-split">

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminPanelController;
+use App\Http\Controllers\CasesController;
 use App\Http\Controllers\DiseaseController;
 use App\Http\Controllers\DistrictController;
 use App\Http\Controllers\HealthcareFacilitiesController;
@@ -42,6 +43,8 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/district-polygon/{id}', [HealthcareFacilitiesController::class, 'getDistrictPolygon']);
         Route::resource('healthcare-facilities', HealthcareFacilitiesController::class, ['as' => 'admin-panel']);
+
+        Route::resource('cases', CasesController::class, ['as' => 'admin-panel']);
     });
 });
 

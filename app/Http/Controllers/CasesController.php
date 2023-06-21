@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cases;
 use Illuminate\Http\Request;
+use Validator;
 
 class CasesController extends Controller
 {
@@ -12,7 +13,9 @@ class CasesController extends Controller
      */
     public function index()
     {
-        //
+        $cases = Cases::latest()->get();
+
+        return view('admin-panel.pages.cases.index', compact('cases'));
     }
 
     /**
@@ -20,7 +23,7 @@ class CasesController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin-panel.pages.cases.create');
     }
 
     /**
@@ -28,7 +31,38 @@ class CasesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = [
+            'disease_id'                => 'required',
+            'healthcare_facilities_id'  => 'required',
+            'reported_at'               => 'required',
+            'status'                    => 'required',
+            'age'                       => 'required',
+            'gender'                    => 'required',
+            'severity'                  => 'required',
+        ];
+
+        $messages = [
+            'disease_id.required'                   => 'Penyakit wajib diisi',
+            'healthcare_facilities_id.required'     => 'Fasilitas Kesehatan wajib diisi',
+            'reported_at.required'                  => 'Tanggal laporan kasus wajib diisi',
+            'status.required'                       => 'Status penyakit wajib diisi',
+            'age.required'                          => 'Usia wajib diisi',
+            'gender.required'                       => 'Jenis kelamin wajib diisi',
+            'severity.required'                     => 'Tingkat kekerasan wajib diisi',
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput($request->all());
+        }
+
+        $data = $request->all();
+        $data['disease_id'] = $request->disease_id;
+        $data['healthcare_facilities_id'] = $request->healthcare_facilities_id;
+        Cases::create($data);
+
+        return redirect()->route('admin-panel.cases.index')->with('success', 'Data kasus berhasil ditambahkan!');
     }
 
     /**
@@ -42,17 +76,50 @@ class CasesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Cases $cases)
-    {
-        //
+    public function edit(Cases $cases, $id)
+    {  
+        $cases = Cases::find($id);
+        return view('admin-panel.pages.cases.edit', compact('cases'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Cases $cases)
+    public function update(Request $request, Cases $cases, $id)
     {
-        //
+        $rules = [
+            'disease_id'                => 'required',
+            'healthcare_facilities_id'  => 'required',
+            'reported_at'               => 'required',
+            'status'                    => 'required',
+            'age'                       => 'required',
+            'gender'                    => 'required',
+            'severity'                  => 'required',
+        ];
+
+        $messages = [
+            'disease_id.required'                   => 'Penyakit wajib diisi',
+            'healthcare_facilities_id.required'     => 'Fasilitas Kesehatan wajib diisi',
+            'reported_at.required'                  => 'Tanggal laporan kasus wajib diisi',
+            'status.required'                       => 'Status penyakit wajib diisi',
+            'age.required'                          => 'Usia wajib diisi',
+            'gender.required'                       => 'Jenis kelamin wajib diisi',
+            'severity.required'                     => 'Tingkat kekerasan wajib diisi',
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput($request->all());
+        }
+
+        $data = $request->all();
+        $data['disease_id'] = $request->disease_id;
+        $data['healthcare_facilities_id'] = $request->healthcare_facilities_id;
+        $cases = Cases::find($id);
+        $cases->update($data);
+
+        return redirect()->route('admin-panel.cases.index')->with('success', 'Data kasus berhasil diedit!');
     }
 
     /**
@@ -60,6 +127,8 @@ class CasesController extends Controller
      */
     public function destroy(Cases $cases)
     {
-        //
+        $cases->delete();
+
+        return redirect()->back()->with('success', 'Data kasus berhasil dihapus!');
     }
 }

@@ -37,7 +37,6 @@
                                         <th class="text-center">No</th>
 										<th class="text-center">Sampul Penyakit Menular</th>
                                         <th>Nama Penyakit Menular</th>
-                                        <th>Deskripsi</th>
                                         <th class="text-center">Action</th>
                                     </tr>
                                 </thead>
@@ -49,7 +48,6 @@
 												<img src="{{ asset($data->cover_image) }}" class="img-responsive" alt="Carousel" width="300px"/>
 											</td>
                                             <td>{{ $data->name }}</td>
-                                            <td>{!! \Str::limit($data->description, 20) !!}</td>
                                             <td class="text-center">
                                                 <a href="{{ route('admin-panel.diseases.edit', $data->id) }} " class="btn btn-warning"
                                                     data-toggle="tooltip" data-placement="top" title="Edit">
