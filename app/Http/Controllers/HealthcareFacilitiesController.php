@@ -138,8 +138,7 @@ class HealthcareFacilitiesController extends Controller
     public function getDistrictPolygon($id)
     {
         $district = District::where('id', $id)->first();
-        $coordinates = $district->coordinates;
         
-        return $coordinates;
+        return $district;
     }
 }

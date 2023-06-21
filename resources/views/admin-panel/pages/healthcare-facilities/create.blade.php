@@ -158,13 +158,14 @@
                 dataType: 'json',
                 success: function (data) {
                     console.log(data); // Check the content of the data object
+                    var dataCoords = JSON.parse(data.coordinates)
     
-                    if (data && Array.isArray(data) && data.length > 0) {
-                        var coordinates = data; // Assign the data array to coordinates
+                    if (dataCoords && Array.isArray(dataCoords) && dataCoords.length > 0) {
+                        var coordinates = dataCoords; // Assign the data array to coordinates
     
                         drawnItems.clearLayers();
     
-                        var polygon = L.polygon(coordinates, { color: 'red' }).addTo(drawnItems); // Set the color of the polygon
+                        var polygon = L.polygon(coordinates, { color: data.color }).addTo(drawnItems); // Set the color of the polygon
                         map.fitBounds(polygon.getBounds());
     
                         $('#coordinates').val(coordinates);
