@@ -158,6 +158,9 @@
                     },
                 },
             });
+            drawnItems.clearLayers();
+            var polygon = L.polygon(coordinates, {color: color });
+            drawnItems.addLayer(polygon);
         });
     </script>
 @endpush
