@@ -121,6 +121,7 @@
                 polyline: false,
                 rectangle: false,
                 circle: false,
+                circlemarker: false
             },
             edit: {
                 featureGroup: drawnItems, 
