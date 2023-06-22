@@ -104,14 +104,26 @@
 
         var drawControl = new L.Control.Draw({
             draw: {
-                polygon: true,
+                polygon: {
+                    shapeOptions: {
+                        color: $('#colorPicker').val() //polygons being drawn will be purple color
+                    },
+                    allowIntersection: false,
+                    drawError: {
+                        color: 'orange',
+                        timeout: 1000
+                    },
+                    showArea: true, //the area of the polygon will be displayed as it is drawn.
+                    metric: false,
+                    repeatMode: false
+                },
                 marker: false,
                 polyline: false,
                 rectangle: false,
                 circle: false,
             },
             edit: {
-                featureGroup: drawnItems,
+                featureGroup: drawnItems, 
                 remove: false,
             },
         });
