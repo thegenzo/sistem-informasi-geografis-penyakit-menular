@@ -85,7 +85,7 @@ class HealthcareFacilitiesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, HealthcareFacilities $healthcareFacilities)
+    public function update(Request $request, HealthcareFacilities $healthcareFacilities, $id)
     {
         $rules = [
             'district_id'               => 'required',
@@ -115,6 +115,7 @@ class HealthcareFacilitiesController extends Controller
 
         $data = $request->all();
         $data['district_id'] = $request->district_id;
+        $healthcareFacilities = HealthcareFacilities::find($id);
         $healthcareFacilities->update($data);
 
         return redirect()->route('admin-panel.healthcare-facilities.index')->with('success', 'Fasilitas kesehatan berhasil diedit!'); 
