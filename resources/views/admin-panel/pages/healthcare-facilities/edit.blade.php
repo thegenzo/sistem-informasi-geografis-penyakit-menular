@@ -178,9 +178,10 @@
             });
         });
 
-		var marker = L.marker([{{ $healthcareFacilities->latitude }}, {{ $healthcareFacilities->longitude }}]).addTo(map);
+		var markerData = L.marker([{{ $healthcareFacilities->latitude }}, {{ $healthcareFacilities->longitude }}]).addTo(map);
 
         map.on('click', function (e) {
+            map.removeLayer(markerData);
             var marker;
 
             map.on('click', function (e) {
