@@ -119,6 +119,8 @@
         });
         map.addControl(drawControl);
         map.on('draw:created', function(e) {
+            drawnItems.clearLayers();
+            
             var type = e.layerType,
                 layer = e.layer;
             drawnItems.addLayer(layer);

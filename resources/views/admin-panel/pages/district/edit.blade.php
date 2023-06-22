@@ -133,5 +133,19 @@
 
             $('#coordinates').val(JSON.stringify(newCoordinates));
         });
+
+        // Color picker change event
+        $('#colorPicker').on('change', function () {
+            var color = $(this).val();
+
+            // Update the polygon draw color
+            drawControl.setDrawingOptions({
+                polygon: {
+                    shapeOptions: {
+                        color: color,
+                    },
+                },
+            });
+        });
     </script>
 @endpush
