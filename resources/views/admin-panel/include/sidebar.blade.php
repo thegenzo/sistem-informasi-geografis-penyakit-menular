@@ -32,9 +32,12 @@
         </li>
         </ul>
         <div class="mt-4 mb-4 p-3 hide-sidebar-mini">
-            <a href="{{ route('logout') }}" class="btn btn-primary btn-lg btn-block btn-icon-split">
-                <i class="fas fa-rocket"></i> Keluar
-            </a>
+            <form action="{{ route('logout') }}" method="POST">
+                @csrf
+                <button type="submit" class="btn btn-primary btn-lg btn-block btn-icon-split">
+                    <i class="fas fa-rocket"></i> Keluar
+                </button>
+            </form>
         </div>
     </aside>
 </div>
