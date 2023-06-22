@@ -89,8 +89,8 @@
                 var id = $(this).data("id");
                 event.preventDefault();
                 Swal.fire({
-                    title: 'Yakin Hapus Berita?',
-                    text: "Berita yang terhapus tidak dapat dikembalikan",
+                    title: 'Yakin Hapus Kecamatan?',
+                    text: "Kecamatan yang terhapus tidak dapat dikembalikan",
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
