@@ -13,6 +13,5 @@ class Disease extends Model
         'cover_image',
         'name',
         'description',
-        'symptoms'
     ];
 }

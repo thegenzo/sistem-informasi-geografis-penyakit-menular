@@ -36,7 +36,6 @@ class DiseaseController extends Controller
             'cover_image'               => 'required|image|mimes:jpeg,png,jpg',
             'name'                      => 'required',
             'description'               => 'required',
-            'symptoms'                  => 'required',
         ];
 
         $messages = [
@@ -45,7 +44,6 @@ class DiseaseController extends Controller
             'cover_image.mimes'                 => 'Sampul penyakit harus berformat gambar (jpeg, png atau jpg)',
             'name.required'                     => 'Nama penyakit kesehatan wajib diisi',
             'description.required'              => 'Deskripsi penyakit wajib diisi',
-            'symptoms.required'                 => 'Gejala penyakit wajib diisi',
         ];
 
         $validator = Validator::make($request->all(), $rules, $messages);

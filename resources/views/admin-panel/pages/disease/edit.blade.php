@@ -60,10 +60,6 @@
 									<label for="description">Deskripsi <span class="text-danger">*</span></label>
 									<textarea class="summernote" name="description" id="description">{{ $disease->description }}</textarea>
 								</div>
-                                <div class="form-group">
-									<label for="symptoms">Gejala-gejala <span class="text-danger">*</span></label>
-									<textarea class="summernote" name="symptoms" id="symptoms">{{ $disease->symptoms }}</textarea>
-								</div>
                             </div>
                         </div>
                         <a href="{{ route('admin-panel.diseases.index') }}" class="btn btn-lg btn-warning d-inline">Kembali</a>
