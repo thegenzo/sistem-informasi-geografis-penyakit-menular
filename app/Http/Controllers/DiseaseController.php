@@ -89,13 +89,11 @@ class DiseaseController extends Controller
         $rules = [
             'name'                      => 'required',
             'description'               => 'required',
-            'symptoms'                  => 'required',
         ];
 
         $messages = [
             'name.required'                     => 'Nama penyakit kesehatan wajib diisi',
             'description.required'              => 'Deskripsi penyakit wajib diisi',
-            'symptoms.required'                 => 'Gejala penyakit wajib diisi',
         ];
 
         $validator = Validator::make($request->all(), $rules, $messages);
