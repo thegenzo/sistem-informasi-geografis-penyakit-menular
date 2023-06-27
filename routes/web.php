@@ -36,6 +36,8 @@ Route::middleware('auth')->group(function () {
 
     Route::group(['prefix' => 'admin-panel'], function () {
         Route::get('/dashboard', [AdminPanelController::class, 'index'])->name('admin-panel.dashboard');
+        Route::get('/get-all-districts', [AdminPanelController::class, 'getAllDistricts']);
+        Route::get('/get-all-healthcares', [AdminPanelController::class, 'getAllHealthcares']);
 
         Route::resource('diseases', DiseaseController::class, ['as' => 'admin-panel']);
 

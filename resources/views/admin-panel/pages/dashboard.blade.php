@@ -2,6 +2,19 @@
 
 @section('title', 'Home')
 
+@push('addon-style')
+    <!-- Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
+	<style>
+		#map { height: 600px; }
+	</style>
+@endpush
+
 @section('content')
     <!-- Main Content -->
     <div class="main-content">
@@ -68,6 +81,61 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12">
+                    <div id="map"></div>
+                </div>
+            </div>
         </section>
     </div>
 @endsection
+
+@push('addon-script')
+    <!-- Initialize leaflet js map -->
+    <script>
+        var map = L.map('map').setView([-5.469706875781235, 122.59711751121827], 13.5);
+
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+
+        // $.getJSON('/admin-panel/get-all-healthcares', function(data) {
+        //     $.each(data, function (index) {
+        //         L.marker([data[index].latitude, data[index].longitude]).addTo(map).on('click', function(e) {
+        //             Swal.fire(
+        //                 data[index].name,
+        //                 'Laki-laki: 20, <br> Perempuan: 12'
+        //             )
+        //         });
+        //     });
+        // });
+
+        $.getJSON('/admin-panel/get-all-districts', function(data) {
+            $.each(data, function (index) {
+                var dataCoords = JSON.parse(data[index].coordinates);
+                L.polygon(dataCoords, { color: data[index].color }).addTo(map)
+                    .bindPopup(data[index].name)
+                    .on('mouseover', function(e) {
+                        this.openPopup();
+                    });
+            });
+        });
+
+    </script>
+    
+    <!-- Loop healthcare facilities -->
+    @foreach (\App\Models\HealthcareFacilities::all() as $healthcare)
+        <script>
+            L.marker([{{ $healthcare->latitude }}, {{ $healthcare->longitude }}]).addTo(map).on('click', function(e) {
+                Swal.fire(
+                    '{{ $healthcare->name }}',
+                    `Total pasien dengan penyakit menular: <br>
+                     Dewasa: L({{ $healthcare->cases()->where("age", ">", 18)->where("gender", "male")->count() }}), P({{ $healthcare->cases()->where("age", ">", 18)->where("gender", "female")->count() }}) <br>
+                     Anak-anak: L({{ $healthcare->cases()->where("age", "<", 18)->where("gender", "male")->count() }}), P({{ $healthcare->cases()->where("age", "<", 18)->where("gender", "female")->count() }})
+                    `
+                )
+            });
+        </script>        
+    @endforeach
+@endpush
