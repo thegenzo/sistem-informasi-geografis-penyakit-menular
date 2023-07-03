@@ -6,6 +6,7 @@ use App\Http\Controllers\DiseaseController;
 use App\Http\Controllers\DistrictController;
 use App\Http\Controllers\HealthcareFacilitiesController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\WebController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,9 +20,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('web.home');
-});
+Route::get('/', [WebController::class, 'index'])->name('web.home');
+Route::get('/diseases', [WebController::class, 'diseases'])->name('web.diseases.index');
+Route::get('/diseases/{id}', [WebController::class, 'diseases_detail'])->name('web.diseases.detail');
 
 Route::view('/map', 'map');
 
