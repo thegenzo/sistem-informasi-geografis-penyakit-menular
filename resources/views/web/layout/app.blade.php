@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 	
-<!-- Mirrored from demos.codexcoder.com/labartisan/html/covid-19/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 16 Jun 2023 12:27:48 GMT -->
-<head>
+	<!-- Mirrored from demos.codexcoder.com/labartisan/html/covid-19/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 16 Jun 2023 12:27:48 GMT -->
+	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		
@@ -16,8 +16,13 @@
 		<link rel="stylesheet" href="{{ asset('assets/css/lightcase.css') }}">
 		<link rel="stylesheet" href="{{ asset('assets/css/swiper.min.css') }}">
 		<link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+		<!-- SweetAlert2 -->
+		<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'>
 		
-		<title>@yield('title') | SISPEMEN Kota Baubau</title>
+
+		@stack('addon-style')
+		
+		<title>@yield('title') - SISPEMEN Kota Baubau</title>
 	</head>
 
 	<body>
@@ -141,6 +146,11 @@
 		<script src="{{ asset('assets/js/jquery.countdown.min.js') }}"></script>
 		<script src="{{ asset('assets/js/wow.min.js') }}"></script>
         <script src="{{ asset('assets/js/functions.js') }}"></script>
+		<!-- SweetAlert2 -->
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.all.min.js"></script>
+
+
+		@stack('addon-script')
 	</body>
 
 <!-- Mirrored from demos.codexcoder.com/labartisan/html/covid-19/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 16 Jun 2023 12:29:29 GMT -->

@@ -2,6 +2,19 @@
 
 @section('title', 'Home')
 
+@push('addon-style')
+    <!-- Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
+	<style>
+		#map { height: 800px; }
+	</style>
+@endpush
+
 @section('content')
 <!-- Banner Section start here -->
 <section class="banner-section pb-0">
@@ -11,9 +24,9 @@
 				<div class="col-12">
 					<div class="content-part text-center">
 						<div class="section-header">
-							<h2>COVID-19 Tracker</h2>
-							<h3>Total Confirmed Corona Cases</h3>
-							<h2 class="count-people">960708</h2>
+							<h2>Sistem Informasi Geografis Penyakit Menular Kota Baubau</h2>
+							<h3>Total Kasus Terlapor</h3>
+							<h2 class="count-people">{{ \App\Models\Cases::count() }}</h2>
 						</div>
 					</div>
 				</div>
@@ -31,77 +44,12 @@
 <!-- Banner Section ending here -->
 
 <!-- corona count section start here -->
-<section class="corona-count-section bg-corona padding-tb pt-0">
-	<div class="container">
-		<div class="corona-wrap">
-			<div class="corona-count-top wow fadeInUp" data-wow-delay="0.3s">
-				<div class="row justify-content-center align-items-center">
-					<div class="col-xl-3 col-md-6 col-12">
-						<h5>Total Corona Statistics :</h5>
-					</div>
-					<div class="col-xl-3 col-md-6 col-12">
-						<div class="corona-item">
-							<div class="corona-inner">
-								<div class="corona-thumb">
-									<img src="assets/images/corona/01.png" alt="corona">
-								</div>
-								<div class="corona-content">
-									<h3 class="count-number">262774</h3>
-									<p>Active Cases</p>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-xl-3 col-md-6 col-12">
-						<div class="corona-item">
-							<div class="corona-inner">
-								<div class="corona-thumb">
-									<img src="assets/images/corona/02.png" alt="corona">
-								</div>
-								<div class="corona-content">
-									<h3 class="count-number">125050</h3>
-									<p>Recovered Cases</p>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-xl-3 col-md-6 col-12">
-						<div class="corona-item">
-							<div class="corona-inner">
-								<div class="corona-thumb">
-									<img src="assets/images/corona/03.png" alt="corona">
-								</div>
-								<div class="corona-content">
-									<h3 class="count-number">16558</h3>
-									<p>Deaths</p>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="corona-count-bottom">
-				<div class="row justify-content-center align-items-center     flex-row-reverse">
-					<div class="col-lg-6 col-12 wow fadeInRight" data-wow-delay="0.4s">
-						<div class="ccb-thumb">
-							<a href="https://www.youtube.com/embed/Z9fQTS_kEqw" data-rel="lightcase" class="ccb-video"><i class="icofont-ui-play"></i><span class="pluse_1"></span><span class="pluse_2"></span></a>
-							<img src="assets/images/corona/01.jpg" alt="corona">
-						</div>
-					</div>
-					<div class="col-lg-6 col-12 wow fadeInLeft" data-wow-delay="0.5s">
-						<div class="ccb-content">
-							<h2>What Is Coronavirus?</h2>
-							<h6>Coronavirus COVID-19 Global Cases map developed by the Johns Hopkins Center for Systems Science and Engineering.</h6>
-							<p>Coronaviruses are type of virus. There are many different kinds, & some cause disease newly identified type has caused recent outbreak of respiratory ilnessnow called COVID-19 that started in China.</p>
-							<ul class="lab-ul">
-								<li><i class="icofont-tick-mark"></i>COVID-19 is the disease caused by the new coronavirus that emerged in China in December 2020.</li>
-								<li><i class="icofont-tick-mark"></i>COVID-19 symptoms include cough, fever and shortness of breath. COVID-19 can be severe, and some cases have caused death.</li>
-								<li><i class="icofont-tick-mark"></i>The new coronavirus can be spread from person to person. It is diagnosed with a laboratory test.</li>
-							</ul>
-							<a href="#" class="lab-btn style-2"><span>get started Now</span></a>
-						</div>
-					</div>
-				</div>
+<section class="corona-count-section bg-corona padding-tb">
+	<div class="corona-count-top wow fadeInUp" data-wow-delay="0.3s">
+		<div class="row justify-content-center align-items-center">
+			<div class="col-xl-12 col-md-12 col-12">
+				<h5>Wilayah Persebaran Penduduk Penderita Penyakit Menular Kota Baubau</h5>
+				<div id="map"></div>
 			</div>
 		</div>
 	</div>
@@ -683,3 +631,53 @@
 </div>
 <!-- Sponsor Section Ending Here -->
 @endsection
+
+@push('addon-script')
+    <!-- Initialize leaflet js map -->
+    <script>
+        var map = L.map('map').setView([-5.469706875781235, 122.59711751121827], 13.5);
+
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+
+        // $.getJSON('/admin-panel/get-all-healthcares', function(data) {
+        //     $.each(data, function (index) {
+        //         L.marker([data[index].latitude, data[index].longitude]).addTo(map).on('click', function(e) {
+        //             Swal.fire(
+        //                 data[index].name,
+        //                 'Laki-laki: 20, <br> Perempuan: 12'
+        //             )
+        //         });
+        //     });
+        // });
+
+        $.getJSON('/admin-panel/get-all-districts', function(data) {
+            $.each(data, function (index) {
+                var dataCoords = JSON.parse(data[index].coordinates);
+                L.polygon(dataCoords, { color: data[index].color }).addTo(map)
+                    .bindPopup(data[index].name)
+                    .on('mouseover', function(e) {
+                        this.openPopup();
+                    });
+            });
+        });
+
+    </script>
+    
+    <!-- Loop healthcare facilities -->
+    @foreach (\App\Models\HealthcareFacilities::all() as $healthcare)
+        <script>
+            L.marker([{{ $healthcare->latitude }}, {{ $healthcare->longitude }}]).addTo(map).on('click', function(e) {
+                Swal.fire(
+                    '{{ $healthcare->name }}',
+                    `Total pasien dengan penyakit menular: <br>
+                     Dewasa: L({{ $healthcare->cases()->where("age", ">", 18)->where("gender", "male")->count() }}), P({{ $healthcare->cases()->where("age", ">", 18)->where("gender", "female")->count() }}) <br>
+                     Anak-anak: L({{ $healthcare->cases()->where("age", "<", 18)->where("gender", "male")->count() }}), P({{ $healthcare->cases()->where("age", "<", 18)->where("gender", "female")->count() }})
+                    `
+                )
+            });
+        </script>        
+    @endforeach
+@endpush
