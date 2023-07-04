@@ -2,12 +2,12 @@
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand">
             <a href="#">
-                <img src="{{ asset('panel-assets/img/stisla.svg') }}" style="width: 50px;" alt="">
+                <img src="{{ asset('assets/images/logo/01.png')}}" alt="logo">
             </a>
         </div>
         <div class="sidebar-brand sidebar-brand-sm">
             <a href="#">
-                <img src="{{ asset('panel-assets/img/stisla.svg') }}" style="width: 50px;" alt="">
+                <img src="{{ asset('assets/images/logo/01.png')}}" alt="logo">
             </a>
         </div>
         <ul class="sidebar-menu">
