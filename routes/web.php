@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [WebController::class, 'index'])->name('web.home');
 Route::get('/diseases', [WebController::class, 'diseases'])->name('web.diseases.index');
 Route::get('/diseases/{id}', [WebController::class, 'diseases_detail'])->name('web.diseases.detail');
+Route::get('/cases/{id}', [WebController::class, 'cases'])->name('web.cases');
 
 Route::view('/map', 'map');
 

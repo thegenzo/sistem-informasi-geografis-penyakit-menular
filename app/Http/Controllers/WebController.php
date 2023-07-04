@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cases;
 use App\Models\Disease;
+use App\Models\HealthcareFacilities;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class WebController extends Controller
 {
@@ -24,5 +27,19 @@ class WebController extends Controller
         $disease = Disease::find($id);
 
         return view('web.diseases-detail', compact('disease'));
+    }
+
+    public function cases($id)
+    {
+        // get healthcare facilities
+        $healthcare = HealthcareFacilities::find($id);
+
+        $cases = Cases::with('disease')->where('healthcare_facilities_id', $healthcare->id)
+                        ->get()
+                        ->groupBy(function ($data) {
+                            return $data->disease->name;
+                        });
+
+        return view('web.cases', compact('cases', 'healthcare'));
     }
 }
