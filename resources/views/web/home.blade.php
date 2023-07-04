@@ -300,7 +300,8 @@
                     '{{ $healthcare->name }}',
                     `Total pasien dengan penyakit menular: <br>
                      Dewasa: L({{ $healthcare->cases()->where("age", ">", 18)->where("gender", "male")->count() }}), P({{ $healthcare->cases()->where("age", ">", 18)->where("gender", "female")->count() }}) <br>
-                     Anak-anak: L({{ $healthcare->cases()->where("age", "<", 18)->where("gender", "male")->count() }}), P({{ $healthcare->cases()->where("age", "<", 18)->where("gender", "female")->count() }})
+                     Anak-anak: L({{ $healthcare->cases()->where("age", "<", 18)->where("gender", "male")->count() }}), P({{ $healthcare->cases()->where("age", "<", 18)->where("gender", "female")->count() }}) <br>
+					 <a href="/">Lihat Data Pasien</a>
                     `
                 )
             });

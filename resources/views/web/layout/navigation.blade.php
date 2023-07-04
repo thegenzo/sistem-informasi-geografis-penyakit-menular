@@ -39,7 +39,7 @@
 						</ul>
 					</div>
 					<div class="header-btn">
-						<a href="#" class="lab-btn"><span>are you sick</span></a>
+						<a href="{{ route('login') }}" class="lab-btn" target="_blank"><span>Login</span></a>
 					</div>
 				</div>
 			</div>
