@@ -28,10 +28,10 @@
 					<thead>
 						<tr>
 							<th>Nama Penyakit</th>
-							<th class="text-center">Dilaporkan pada</th>
 							<th class="text-center">Status</th>
 							<th class="text-center">Usia</th>
 							<th class="text-center">Jenis Kelamin</th>
+							<th class="text-center">Total Pasien</th>
 							<th class="text-center">Kekerasan</th>
 						</tr>
 					</thead>
@@ -61,6 +61,7 @@
 											Perempuan
 										@endif
 									</td>
+									<td class="text-center">{{ $case->total }}</td>
 									<td class="text-center">{{ $case->age }}</td>
 									<td class="text-center">
 										@if ($case->severity == 'mild')

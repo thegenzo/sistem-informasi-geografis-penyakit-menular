@@ -17,10 +17,10 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Disease::class)->constrained();
             $table->foreignIdFor(HealthcareFacilities::class)->constrained();
-            $table->date('reported_at');
             $table->enum('status', ['confirmed', 'suspected', 'recovered', 'deceased']);
-            $table->integer('age');
+            $table->string('age');
             $table->enum('gender', ['male', 'female']);
+            $table->integer('total');
             $table->enum('severity', ['mild', 'moderate', 'severe', 'critical', 'asymptomatic']);
             $table->timestamps();
         });

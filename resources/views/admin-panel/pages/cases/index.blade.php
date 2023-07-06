@@ -38,10 +38,10 @@
                                         <th>Kecamatan</th>
 										<th>FASKES</th>
 										<th>Penyakit</th>
-										<th class="text-center">Tanggal Laporan</th>
 										<th class="text-center">Status</th>
 										<th class="text-center">Jenis Kelamin</th>
 										<th class="text-center">Usia</th>
+										<th class="text-center">Total Pasien</th>
 										<th class="text-center">Tingkat Keparahan</th>
                                         <th class="text-center">Action</th>
                                     </tr>
@@ -53,7 +53,6 @@
                                             <td>{{ $data->healthcare_facilities->district->name }}</td>
 											<td>{{ $data->healthcare_facilities->name }}</td>
 											<td>{{ $data->disease->name }}</td>
-											<td class="text-center">{{ \Carbon\Carbon::parse($data->reported_at)->locale('id')->isoFormat('LL') }}</td>
 											<td class="text-center">
                                                 @if ($data->status == 'suspected')
                                                 <span class="badge badge-warning">Terduga</span>
@@ -73,6 +72,7 @@
                                                 @endif
                                             </td>
                                             <td class="text-center">{{ $data->age }}</td>
+                                            <td class="text-center">{{ $data->total }}</td>
                                             <td class="text-center">
                                                 @if ($data->severity == 'mild')
                                                 <span class="badge badge-info">Ringan</span>

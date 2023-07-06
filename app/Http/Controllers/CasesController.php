@@ -34,20 +34,20 @@ class CasesController extends Controller
         $rules = [
             'disease_id'                => 'required',
             'healthcare_facilities_id'  => 'required',
-            'reported_at'               => 'required',
             'status'                    => 'required',
             'age'                       => 'required',
             'gender'                    => 'required',
+            'total'                     => 'required',
             'severity'                  => 'required',
         ];
 
         $messages = [
             'disease_id.required'                   => 'Penyakit wajib diisi',
             'healthcare_facilities_id.required'     => 'Fasilitas Kesehatan wajib diisi',
-            'reported_at.required'                  => 'Tanggal laporan kasus wajib diisi',
             'status.required'                       => 'Status penyakit wajib diisi',
             'age.required'                          => 'Usia wajib diisi',
             'gender.required'                       => 'Jenis kelamin wajib diisi',
+            'total.required'                        => 'Total pasien wajib diisi',
             'severity.required'                     => 'Tingkat kekerasan wajib diisi',
         ];
 
@@ -90,20 +90,20 @@ class CasesController extends Controller
         $rules = [
             'disease_id'                => 'required',
             'healthcare_facilities_id'  => 'required',
-            'reported_at'               => 'required',
             'status'                    => 'required',
             'age'                       => 'required',
             'gender'                    => 'required',
+            'total'                     => 'required',
             'severity'                  => 'required',
         ];
 
         $messages = [
             'disease_id.required'                   => 'Penyakit wajib diisi',
             'healthcare_facilities_id.required'     => 'Fasilitas Kesehatan wajib diisi',
-            'reported_at.required'                  => 'Tanggal laporan kasus wajib diisi',
             'status.required'                       => 'Status penyakit wajib diisi',
             'age.required'                          => 'Usia wajib diisi',
             'gender.required'                       => 'Jenis kelamin wajib diisi',
+            'total.required'                        => 'Total pasien wajib diisi',
             'severity.required'                     => 'Tingkat kekerasan wajib diisi',
         ];
 

@@ -66,14 +66,19 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <label for="reported_at">Tanggal Laporan <span class="text-danger">*</span></label>
-                                            <input type="date" name="reported_at" id="reported_at" class="form-control" value="{{ old('reported_at') }}">
+                                            <label for="age">Usia <span class="text-danger">*</span></label>
+                                            <select name="age" id="age" class="form-control select2">
+                                                <option value="" selected hidden>--- Pilih Kelompok Usia ---</option>
+                                                <option value="0 - 18">0 - 18 Tahun</option>
+                                                <option value="18 - 30">18 - 30 Tahun</option>
+                                                <option value="30 Tahun Keatas">30 Tahun Keatas</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <label for="page_content">Usia <span class="text-danger">*</span></label>
-                                            <input type="number" name="age" id="age" class="form-control" value="{{ old('age') }}">
+                                            <label for="total">Total Pasien <span class="text-danger">*</span></label>
+                                            <input type="number" name="total" id="total" class="form-control" value="{{ old('total') }}">
                                         </div>
                                     </div>
                                 </div>

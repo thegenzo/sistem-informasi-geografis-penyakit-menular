@@ -12,10 +12,10 @@ class Cases extends Model
     protected $fillable = [
         'disease_id',
         'healthcare_facilities_id',
-        'reported_at',
         'status',
         'age',
         'gender',
+        'total',
         'severity'
     ];
 
