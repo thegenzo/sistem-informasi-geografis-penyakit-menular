@@ -42,7 +42,6 @@
 							</tr>
 							@foreach ($groupCases as $case)
 								<tr>
-									<td class="text-center">{{ \Carbon\Carbon::parse($case->reported_at)->locale('id')->isoFormat('LL') }}</td>
 									<td class="text-center">
 										@if ($case->status == 'suspected')
 											<span class="badge badge-warning">Terduga</span>
@@ -54,6 +53,7 @@
 											<span class="badge badge-light">Meninggal</span>
 										@endif
 									</td>
+									<td class="text-center">{{ $case->age }}</td>
 									<td class="text-center">
 										@if ($case->gender == 'male')
 											Laki-laki
@@ -62,7 +62,6 @@
 										@endif
 									</td>
 									<td class="text-center">{{ $case->total }}</td>
-									<td class="text-center">{{ $case->age }}</td>
 									<td class="text-center">
 										@if ($case->severity == 'mild')
 											<span class="badge badge-info">Ringan</span>
