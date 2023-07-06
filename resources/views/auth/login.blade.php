@@ -8,9 +8,9 @@
                     <img src="{{ asset('assets/images/logo/01.png')}}" alt="logo">
                 </div>
 
-                <div class="card card-success">
+                <div class="card card-primary">
                     <div class="card-header">
-                        <h4 class="text-success">Login</h4>
+                        <h4 class="text-primary">Login</h4>
                     </div>
 
                     <div class="card-body">
@@ -45,7 +45,7 @@
                             </div>
 
                             <div class="form-group">
-                                <button type="submit" class="btn btn-success btn-lg btn-block" tabindex="4">
+                                <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
                                     Login
                                 </button>
                             </div>
