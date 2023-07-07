@@ -39,9 +39,7 @@
 						@foreach ($cases as $disease => $groupCases)
 							<tr>
 								<td rowspan="6">{{ $disease }}</td>
-							</tr>
-							@foreach ($groupCases as $case)
-								<tr>
+								@foreach ($groupCases as $case)
 									<td class="text-center">
 										@if ($case->status == 'suspected')
 											<span class="badge badge-warning">Terduga</span>
@@ -77,11 +75,11 @@
 											<span class="badge badge-light">Tanpa gejala</span>
 										@endif
 									</td>
-								</tr>                                
-							@endforeach
+								@endforeach
+							</tr>
 						@endforeach
 					</tbody>
-				</table>
+				</table>				
 				<a href="/" class="btn btn-md btn-warning">Kembali</a>
 			</div>
 		</div>
