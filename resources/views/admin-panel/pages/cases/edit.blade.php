@@ -98,6 +98,7 @@
                                                 <option value="" selected hidden>--- Pilih Jenis Kelamin ---</option>
                                                 <option value="male" {{ $cases->gender == "male" ? 'selected' : '' }}>Laki-laki</option>
                                                 <option value="female" {{ $cases->gender == "female" ? 'selected' : '' }}>Perempuan</option>
+                                                <option value="m+f" {{ $cases->gender == "m+f" ? 'selected' : '' }}>Laki-laki + Perempuan</option>
                                             </select>
                                         </div>
                                     </div>

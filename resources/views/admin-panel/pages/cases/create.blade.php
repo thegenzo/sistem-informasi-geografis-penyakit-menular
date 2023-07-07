@@ -102,6 +102,7 @@
                                                 <option value="" selected hidden>--- Pilih Jenis Kelamin ---</option>
                                                 <option value="male">Laki-laki</option>
                                                 <option value="female">Perempuan</option>
+                                                <option value="m+f">Laki-laki + Perempuan</option>
                                             </select>
                                         </div>
                                     </div>
