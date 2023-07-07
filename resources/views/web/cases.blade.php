@@ -38,7 +38,7 @@
 					<tbody>
 						@foreach ($cases as $disease => $groupCases)
 							<tr>
-								<td rowspan="4">{{ $disease }}</td>
+								<td rowspan="{{ $groupCases->count() + 1 }}">{{ $disease }}</td>
 							@foreach ($groupCases as $case)
 								<tr>
 									<td class="text-center">
