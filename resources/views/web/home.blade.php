@@ -26,7 +26,7 @@
 						<div class="section-header">
 							<h2>Sistem Informasi Geografis Penyakit Menular Kota Baubau</h2>
 							<h3>Total Kasus Terlapor</h3>
-							<h2 class="count-people">{{ \App\Models\Cases::count() }}</h2>
+							<h2 class="count-people">{{ \App\Models\Cases::sum('total') }}</h2>
 						</div>
 					</div>
 				</div>
@@ -299,9 +299,9 @@
                 Swal.fire(
                     '{{ $healthcare->name }}',
                     `Total pasien dengan penyakit menular: <br>
-                     Dewasa: L({{ $healthcare->cases()->where("age", ">", 18)->where("gender", "male")->count() }}), P({{ $healthcare->cases()->where("age", ">", 18)->where("gender", "female")->count() }}) <br>
-                     Anak-anak: L({{ $healthcare->cases()->where("age", "<", 18)->where("gender", "male")->count() }}), P({{ $healthcare->cases()->where("age", "<", 18)->where("gender", "female")->count() }}) <br>
-					 <a href="{{ route('web.cases', $healthcare->id) }}" class="btn btn-sm btn-info">Lihat Data Pasien</a>
+                     Dewasa: L({{ $healthcare->cases()->where("age", "!=", "0 - 18")->where("gender", "male")->sum('total') }}), P({{ $healthcare->cases()->where("age", "!=", "0 - 18")->where("gender", "female")->sum('total') }}) <br>
+                     Anak-anak: L({{ $healthcare->cases()->where("age", "=", "0 - 18")->where("gender", "male")->sum('total') }}), P({{ $healthcare->cases()->where("age", "=", "0 - 18")->where("gender", "female")->sum('total') }}) <br>
+					 <a href="{{ route('web.cases', $healthcare->id) }}" class="btn btn-sm btn-info" target="_blank">Lihat Data Pasien</a>
                     `
                 )
             });
