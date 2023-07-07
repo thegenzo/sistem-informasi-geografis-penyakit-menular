@@ -100,7 +100,7 @@
 @push('addon-script')
     <!-- Initialize leaflet js map -->
     <script>
-        var map = L.map('map').setView([-5.469706875781235, 122.59711751121827], 13.5);
+        var map = L.map('map').setView([-5.469706875781235, 122.59711751121827], 12);
 
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
