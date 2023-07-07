@@ -65,9 +65,9 @@
                                         <div class="form-group">
                                             <label for="age">Usia <span class="text-danger">*</span></label>
                                             <select name="age" id="age" class="form-control select2">
-                                                <option value="0 - 18" {{ $cases->age = '0 - 18' ? 'selected' : ''}}>0 - 18 Tahun</option>
-                                                <option value="18 - 30" {{ $cases->age = '18 - 30' ? 'selected' : ''}}>18 - 30 Tahun</option>
-                                                <option value="30 Tahun Keatas" {{ $cases->age = '0 - 18' ? '30 Tahun Keatas' : ''}}>30 Tahun Keatas</option>
+                                                <option value="0 - 18" {{ $cases->age == "0 - 18" ? 'selected' : ''}}>0 - 18 Tahun</option>
+                                                <option value="18 - 30" {{ $cases->age == "18 - 30" ? 'selected' : ''}}>18 - 30 Tahun</option>
+                                                <option value="30 Tahun Keatas" {{ $cases->age == "30 Tahun Keatas" ? 'selected' : ''}}>30 Tahun Keatas</option>
                                             </select>
                                         </div>
                                     </div>
