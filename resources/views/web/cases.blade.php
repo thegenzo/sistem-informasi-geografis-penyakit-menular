@@ -57,8 +57,10 @@
 									<td class="text-center">
 										@if ($case->gender == 'male')
 											Laki-laki
-										@else
+										@elseif ($case->gender == 'female')
 											Perempuan
+										@else
+											Laki-laki + Perempuan
 										@endif
 									</td>
 									<td class="text-center">{{ $case->total }}</td>

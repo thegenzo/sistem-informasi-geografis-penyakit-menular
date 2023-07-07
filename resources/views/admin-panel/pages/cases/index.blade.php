@@ -67,8 +67,10 @@
                                             <td class="text-center">
                                                 @if ($data->gender == 'male')
                                                 Laki-laki
-                                                @else
+                                                @elseif ($data->gender == 'female')
                                                 Perempuan
+                                                @else
+                                                Laki-laki + Perempuan
                                                 @endif
                                             </td>
                                             <td class="text-center">{{ $data->age }}</td>
