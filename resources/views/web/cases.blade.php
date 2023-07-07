@@ -38,8 +38,7 @@
 					<tbody>
 						@foreach ($cases as $disease => $groupCases)
 							<tr>
-								<td rowspan="6">{{ $disease }}</td>
-							</tr>
+								<td rowspan="4">{{ $disease }}</td>
 							@foreach ($groupCases as $case)
 								<tr>
 									<td class="text-center">
@@ -78,6 +77,7 @@
 										@endif
 									</td>
 								</tr>                                
+							</tr>
 							@endforeach
 						@endforeach
 					</tbody>
