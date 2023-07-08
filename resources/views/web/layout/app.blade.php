@@ -31,7 +31,7 @@
 		@yield('content')
 
 		<!-- Footer Section Start Here -->
-		<footer style="background-image: {{ URL::asset('assets/css/bg-image/footer-bg.jpg') }};">
+		<footer style="background-image: url({{ asset('assets/css/bg-image/footer-bg.jpg') }});">
 			<div class="footer-bottom">
 				<div class="container">
 					<div class="section-wrapper">
@@ -39,7 +39,7 @@
 					</div>
 				</div>
 			</div>
-		</footer>
+		</footer>		
 		<!-- Footer Section Ending Here -->
 
 		<!-- scrollToTop start here -->
