@@ -39,7 +39,11 @@
 						</ul>
 					</div>
 					<div class="header-btn">
+						@if (!Auth::check())
 						<a href="{{ route('login') }}" class="lab-btn" target="_blank"><span>Login</span></a>
+						@else
+						<a href="{{ route('admin-panel.dashboard') }}" class="lab-btn" target="_blank"><span>Dashboard</span></a>
+						@endif
 					</div>
 				</div>
 			</div>
