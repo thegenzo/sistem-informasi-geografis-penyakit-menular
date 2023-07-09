@@ -136,22 +136,21 @@
                 var form = $(this).closest("form");
                 var id = $(this).data("id");
                 event.preventDefault();
-                swal({
-                        title: `Yakin Hapus Kasus?`,
-                        text: "Kasus yang terhapus tidak dapat dikembalikan",
-                        icon: "warning",
-                        buttons: true,
-                        dangerMode: true,
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'Ya, hapus',
-                    })
-                    .then((willDelete) => {
-                        if (willDelete) {
-                            form.submit();
-                        }
-                    });
+                Swal.fire({
+                    title: 'Yakin Hapus Kasus?',
+                    text: "Kasus yang terhapus tidak dapat dikembalikan",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, hapus!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit()
+                    } else if (result.isDenied) {
+                        Swal.fire('Perubahan tidak disimpan', '', 'info')
+                    }
+                })
             });
 
         });
