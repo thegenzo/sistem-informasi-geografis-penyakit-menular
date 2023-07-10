@@ -299,8 +299,8 @@
                 Swal.fire(
                     '{{ $healthcare->name }}',
                     `Total pasien dengan penyakit menular: <br>
-                     Dewasa: L({{ $healthcare->cases()->where("age", "!=", "0 - 18")->where("gender", "male")->sum('total') }}), P({{ $healthcare->cases()->where("age", "!=", "0 - 18")->where("gender", "female")->sum('total') }}) <br>
-                     Anak-anak: L+P({{ $healthcare->cases()->where("age", "=", "0 - 18")->sum('total') }}) <br>
+                     Dewasa: {{ $healthcare->cases()->where("age", "!=", "0 - 18")->sum('total') }} Orang <br>
+                     Anak-anak: {{ $healthcare->cases()->where("age", "=", "0 - 18")->sum('total') }} Orang <br>
 					 <a href="{{ route('web.cases', $healthcare->id) }}" class="btn btn-sm btn-info">Lihat Data Pasien</a>
                     `
                 )
