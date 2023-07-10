@@ -72,7 +72,7 @@ class DistrictController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, District $district)
+    public function update(Request $request, $id)
     {
         $rules = [
             'name'          => 'required',
@@ -91,6 +91,7 @@ class DistrictController extends Controller
         }
 
         $data = $request->all();
+        $district = District::find($id);
         $district->update($data);
 
         return redirect()->route('admin-panel.districts.index')->with('success', 'Kecamatan berhasil diedit!');

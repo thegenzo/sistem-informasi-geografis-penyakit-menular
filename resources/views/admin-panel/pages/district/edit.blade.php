@@ -69,7 +69,7 @@
                                     <input type="color" name="color" class="form-control" id="colorPicker" value="{{ $district->color }}">
                                 </div>
                                 <div id="map"></div>
-                                <input type="hidden" name="coordinates" id="coordinates" value="{{ $district->coordinates }}">
+                                <input type="text" class="form-control" name="coordinates" id="coordinates" value="{{ $district->coordinates }}">
                             </div>
                         </div>
                         <a href="{{ route('admin-panel.districts.index') }}" class="btn btn-lg btn-warning d-inline">Kembali</a>
@@ -92,16 +92,16 @@
             attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
             maxZoom: 18,
         }).addTo(map);
-
+    
         var drawnItems = new L.FeatureGroup();
         var polyColor = $('#colorPicker').val();
         map.addLayer(drawnItems);
-
+    
         var coordinates = JSON.parse(document.getElementById('coordinates').value);
-        var polygon = L.polygon(coordinates, {color: polyColor });
+        var polygon = L.polygon(coordinates, { color: polyColor });
         drawnItems.addLayer(polygon);
         map.fitBounds(polygon.getBounds());
-
+    
         var drawControl = new L.Control.Draw({
             draw: {
                 polygon: {
@@ -124,33 +124,66 @@
                 circlemarker: false
             },
             edit: {
-                featureGroup: drawnItems, 
+                featureGroup: drawnItems,
                 remove: false,
             },
         });
         map.addControl(drawControl);
-
+    
         map.on('draw:created', function (e) {
             drawnItems.clearLayers();
-            
-
+    
             var layer = e.layer;
             drawnItems.addLayer(layer);
-
+    
             var newCoordinates = layer.getLatLngs()[0].map(function (latLng) {
                 return [latLng.lat, latLng.lng];
             });
-
+    
             // Reverse the order of coordinates (latitude first, longitude last)
             newCoordinates.reverse();
-
+    
             $('#coordinates').val(JSON.stringify(newCoordinates));
         });
+    
+        // Function to edit the polygon
+        function editPolygon() {
+            drawnItems.clearLayers();
+    
+            var coordinates = JSON.parse($('#coordinates').val());
+            var polygon = L.polygon(coordinates, { color: $('#colorPicker').val() });
+            drawnItems.addLayer(polygon);
+            map.fitBounds(polygon.getBounds());
+    
+            drawControl.setDrawingOptions({
+                polygon: {
+                    shapeOptions: {
+                        color: $('#colorPicker').val(),
+                    },
+                },
+            });
+        }
 
+        map.on("draw:edited", function(e) {
+            let layers = e.layers;
+            layers.eachLayer(function(layer) {
+                drawnItems.addLayer(layer);
+    
+                var newCoordinates = layer.getLatLngs()[0].map(function (latLng) {
+                    return [latLng.lat, latLng.lng];
+                });
+
+                // Reverse the order of coordinates (latitude first, longitude last)
+                newCoordinates.reverse();
+
+                $('#coordinates').val(JSON.stringify(newCoordinates));
+            });
+        });
+    
         // Color picker change event
         $('#colorPicker').on('change', function () {
             var color = $(this).val();
-
+    
             // Update the polygon draw color
             drawControl.setDrawingOptions({
                 polygon: {
@@ -159,9 +192,9 @@
                     },
                 },
             });
-            drawnItems.clearLayers();
-            var polygon = L.polygon(coordinates, {color: color });
-            drawnItems.addLayer(polygon);
+    
+            editPolygon();
         });
     </script>
+    
 @endpush
