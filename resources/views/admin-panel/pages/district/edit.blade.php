@@ -69,7 +69,7 @@
                                     <input type="color" name="color" class="form-control" id="colorPicker" value="{{ $district->color }}">
                                 </div>
                                 <div id="map"></div>
-                                <input type="text" class="form-control" name="coordinates" id="coordinates" value="{{ $district->coordinates }}">
+                                <input type="hidden" class="form-control" name="coordinates" id="coordinates" value="{{ $district->coordinates }}">
                             </div>
                         </div>
                         <a href="{{ route('admin-panel.districts.index') }}" class="btn btn-lg btn-warning d-inline">Kembali</a>
