@@ -17,6 +17,13 @@
 					<li class="{{ Route::is('web.home') ? 'active' : '' }}"><a href="{{ route('web.home') }}">Home</a></li>
 					<li class="{{ Route::is('web.diseases.*') ? 'active' : '' }}"><a href="{{ route('web.diseases.index') }}">Data Penyakit</a></li>
 				</ul>
+				<div class="header-btn">
+					@if (!Auth::check())
+					<a href="{{ route('login') }}" class="lab-btn" target="_blank"><span>Login</span></a>
+					@else
+					<a href="{{ route('admin-panel.dashboard') }}" class="lab-btn" target="_blank"><span>Dashboard</span></a>
+					@endif
+				</div>
 			</div>
 		</div>
 	</nav>
