@@ -294,11 +294,12 @@
 
                 var dataCoords = JSON.parse(data[index].coordinates);
                 L.polygon(dataCoords, { 
-						color: polyColor,
+						fillColor: polyColor,
 						weight: 2,
 						opacity: 1,
 						dashArray: '3',
-						fillOpacity: 0.7
+						fillOpacity: 0.7,
+                        color: 'black'
 					})
 					.addTo(map)
                     .bindPopup(`
