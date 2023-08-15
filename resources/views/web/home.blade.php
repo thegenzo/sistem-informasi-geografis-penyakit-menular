@@ -263,9 +263,9 @@
     <script>
         var map = L.map('map').setView([-5.469706875781235, 122.59711751121827], 12);
 
-        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png', {
             maxZoom: 19,
-            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+			attribution: '©OpenStreetMap, ©CartoDB'
         }).addTo(map);
 
         // $.getJSON('/admin-panel/get-all-healthcares', function(data) {
@@ -281,12 +281,38 @@
 
         $.getJSON('/admin-panel/get-all-districts', function(data) {
             $.each(data, function (index) {
+				var totalCases = data[index].total_cases;
+				
+				var polyColor;
+				if(totalCases < 250) {
+					polyColor = '#ffeda0';
+				} else if (totalCases > 250 && totalCases < 500) {
+					polyColor = '#feb24c';
+				} else {
+					polyColor = '#f03b20';
+				}
+
                 var dataCoords = JSON.parse(data[index].coordinates);
-                L.polygon(dataCoords, { color: data[index].color }).addTo(map)
-                    .bindPopup(data[index].name)
-                    .on('mouseover', function(e) {
+                L.polygon(dataCoords, { 
+						color: polyColor,
+						weight: 2,
+						opacity: 1,
+						dashArray: '3',
+						fillOpacity: 0.7
+					})
+					.addTo(map)
+                    .bindPopup(`
+						${data[index].name}
+						<br>
+						Total Kasus: ${totalCases}
+					`)
+					.on('mouseover', function(e) {
                         this.openPopup();
-                    });
+                    })
+					.on('mouseout', function (e) {
+						this.closePopup();
+					});
+					
             });
         });
 
