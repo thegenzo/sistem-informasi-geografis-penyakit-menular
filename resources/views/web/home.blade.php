@@ -325,11 +325,12 @@
             L.marker([{{ $healthcare->latitude }}, {{ $healthcare->longitude }}]).addTo(map).on('click', function(e) {
                 Swal.fire(
                     '{{ $healthcare->name }}',
-                    `Total pasien dengan penyakit menular: <br>
+                    `Data penyakit menular: <br>
 						<ul style="list-style-type: none;">
 						@foreach ($healthcare->cases->unique('disease_id') as $key => $value)
 							<li>{{ $value->disease->name }}</li>
 						@endforeach
+						</ul>
 					 <a href="{{ route('web.cases', $healthcare->id) }}" class="btn btn-sm btn-info">Lihat Data Pasien</a>
                     `
                 )
