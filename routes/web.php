@@ -31,16 +31,16 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::group(['prefix' => 'admin-panel'], function () {
+    Route::get('/get-all-districts', [AdminPanelController::class, 'getAllDistricts']);
+    Route::get('/get-all-healthcares', [AdminPanelController::class, 'getAllHealthcares']);
+    Route::get('/polygon-except-one/{id}', [DistrictController::class, 'polygonExceptOne']);
+});
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
-    Route::group(['prefix' => 'admin-panel'], function () {
-        Route::get('/get-all-districts', [AdminPanelController::class, 'getAllDistricts']);
-        Route::get('/get-all-healthcares', [AdminPanelController::class, 'getAllHealthcares']);
-        Route::get('/polygon-except-one/{id}', [DistrictController::class, 'polygonExceptOne']);
-    });
 
     Route::group(['prefix' => 'admin-panel'], function () {
         Route::get('/dashboard', [AdminPanelController::class, 'index'])->name('admin-panel.dashboard');
