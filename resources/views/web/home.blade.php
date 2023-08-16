@@ -326,8 +326,10 @@
                 Swal.fire(
                     '{{ $healthcare->name }}',
                     `Total pasien dengan penyakit menular: <br>
-                     Dewasa: {{ $healthcare->cases()->where("age", "!=", "0 - 18")->sum('total') }} Orang <br>
-                     Anak-anak: {{ $healthcare->cases()->where("age", "=", "0 - 18")->sum('total') }} Orang <br>
+						<ul style="list-style-type: none;">
+						@foreach ($healthcare->cases->unique('disease_id') as $key => $value)
+							<li>{{ $value->disease->name }}</li>
+						@endforeach
 					 <a href="{{ route('web.cases', $healthcare->id) }}" class="btn btn-sm btn-info">Lihat Data Pasien</a>
                     `
                 )
