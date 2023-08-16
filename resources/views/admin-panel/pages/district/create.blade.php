@@ -117,6 +117,46 @@
                 featureGroup: drawnItems
             }
         });
+
+        // display existing polygons
+        $.getJSON('/admin-panel/get-all-districts', function(data) {
+            $.each(data, function (index) {
+				var totalCases = data[index].total_cases;
+				
+				var polyColor;
+				if(totalCases < 250) {
+					polyColor = '#ffeda0';
+				} else if (totalCases > 250 && totalCases < 500) {
+					polyColor = '#feb24c';
+				} else {
+					polyColor = '#f03b20';
+				}
+
+                var dataCoords = JSON.parse(data[index].coordinates);
+                L.polygon(dataCoords, { 
+						fillColor: polyColor,
+						weight: 2,
+						opacity: 1,
+						dashArray: '3',
+						fillOpacity: 0.7,
+                        color: 'black'
+					})
+					.addTo(map)
+                    .bindPopup(`
+						${data[index].name}
+						<br>
+						Total Kasus: ${totalCases}
+					`)
+					.on('mouseover', function(e) {
+                        this.openPopup();
+                    })
+					.on('mouseout', function (e) {
+						this.closePopup();
+					});
+					
+            });
+        });
+
         map.addControl(drawControl);
         map.on('draw:created', function(e) {
             drawnItems.clearLayers();

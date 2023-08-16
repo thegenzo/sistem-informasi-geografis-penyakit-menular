@@ -109,4 +109,16 @@ class DistrictController extends Controller
         
         return redirect()->back()->with('success', 'Kecamatan berhasil ditambahkan!');
     }
+
+    public function polygonExceptOne($id)
+    {
+        $district = District::selectRaw('districts.id, districts.name, districts.coordinates, SUM(cases.total) as total_cases')
+                        ->leftJoin('healthcare_facilities', 'districts.id', '=', 'healthcare_facilities.district_id')
+                        ->leftJoin('cases', 'healthcare_facilities.id', '=', 'cases.healthcare_facilities_id')
+                        ->where('districts.id', '!=', $id)
+                        ->groupBy('districts.id', 'districts.name', 'districts.coordinates')
+                        ->get();
+
+        return $district;
+    }
 }
