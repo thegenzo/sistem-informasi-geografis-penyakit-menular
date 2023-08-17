@@ -11,7 +11,25 @@
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
 	<style>
-		#map { height: 800px; }
+		#map { 
+			height: 800px; 
+		}
+		.info.legend {
+			background-color: white;
+			padding: 6px 8px;
+			font-size: 14px;
+			border: 1px solid #ccc;
+			line-height: 40px;
+			color: #333;
+			border-radius: 3px;
+		}
+		.info.legend i {
+			width: 40px;
+			height: 40px;
+			float: left;
+			margin-right: 8px;
+			opacity: 0.7;
+		}
 	</style>
 @endpush
 
@@ -306,6 +324,25 @@
 					});
 					
             });
+
+ 			// Populate the legend
+ 			var legend = L.control({ position: 'bottomright' });
+
+			legend.onAdd = function(map) {
+				var div = L.DomUtil.create('div', 'info legend');
+				var grades = [0, 250, 500];
+				var colors = ['#ffeda0', '#feb24c', '#f03b20'];
+				
+				for (var i = 0; i < grades.length; i++) {
+					div.innerHTML +=
+						'<i style="background:' + colors[i] + '"></i> ' +
+						(grades[i] === 0 ? '0' : (grades[i] + 1)) + 
+						(grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+				}
+				return div;
+			};
+
+			legend.addTo(map);
         });
 
     </script>
