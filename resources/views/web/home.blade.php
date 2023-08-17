@@ -263,9 +263,9 @@
     <script>
         var map = L.map('map').setView([-5.434256171801455, 122.64244079589845], 12);
 
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-			attribution: '©OpenStreetMap, ©CartoDB'
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+            maxZoom: 18,
         }).addTo(map);
 
         $.getJSON('/admin-panel/get-all-districts', function(data) {
