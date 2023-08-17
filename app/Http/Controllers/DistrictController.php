@@ -112,13 +112,20 @@ class DistrictController extends Controller
 
     public function polygonExceptOne($id)
     {
-        $district = District::selectRaw('districts.id, districts.name, districts.coordinates, SUM(cases.total) as total_cases')
-                        ->leftJoin('healthcare_facilities', 'districts.id', '=', 'healthcare_facilities.district_id')
-                        ->leftJoin('cases', 'healthcare_facilities.id', '=', 'cases.healthcare_facilities_id')
-                        ->where('districts.id', '!=', $id)
-                        ->groupBy('districts.id', 'districts.name', 'districts.coordinates')
-                        ->get();
+        $districts = District::selectRaw('
+                        districts.id as district_id,
+                        districts.name as district_name,
+                        districts.coordinates,
+                        SUM(cases.total) as total_cases,
+                        GROUP_CONCAT(DISTINCT diseases.name) as disease_names
+                    ')
+                    ->leftJoin('healthcare_facilities', 'districts.id', '=', 'healthcare_facilities.district_id')
+                    ->leftJoin('cases', 'healthcare_facilities.id', '=', 'cases.healthcare_facilities_id')
+                    ->leftJoin('diseases', 'cases.disease_id', '=', 'diseases.id')
+                    ->where('districts.id', '!=', $id)
+                    ->groupBy('districts.id', 'districts.name', 'districts.coordinates')
+                    ->get();
 
-        return $district;
+        return $districts;
     }
 }

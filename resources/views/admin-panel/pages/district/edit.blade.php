@@ -173,9 +173,11 @@
 					})
 					.addTo(map)
                     .bindPopup(`
-						${data[index].name}
+						${data[index].district_name}
 						<br>
 						Total Kasus: ${totalCases}
+						<br>
+						Data Penyakit Menular: ${data[index].disease_names}
 					`)
 					.on('mouseover', function(e) {
                         this.openPopup();

@@ -100,23 +100,12 @@
 @push('addon-script')
     <!-- Initialize leaflet js map -->
     <script>
-        var map = L.map('map').setView([-5.469706875781235, 122.59711751121827], 12);
+        var map = L.map('map').setView([-5.434256171801455, 122.64244079589845], 12);
 
         L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png', {
             maxZoom: 19,
 			attribution: '©OpenStreetMap, ©CartoDB'
         }).addTo(map);
-
-        // $.getJSON('/admin-panel/get-all-healthcares', function(data) {
-        //     $.each(data, function (index) {
-        //         L.marker([data[index].latitude, data[index].longitude]).addTo(map).on('click', function(e) {
-        //             Swal.fire(
-        //                 data[index].name,
-        //                 'Laki-laki: 20, <br> Perempuan: 12'
-        //             )
-        //         });
-        //     });
-        // });
 
         $.getJSON('/admin-panel/get-all-districts', function(data) {
             $.each(data, function (index) {
@@ -142,9 +131,11 @@
 					})
 					.addTo(map)
                     .bindPopup(`
-						${data[index].name}
+						${data[index].district_name}
 						<br>
 						Total Kasus: ${totalCases}
+						<br>
+						Data Penyakit Menular: ${data[index].disease_names}
 					`)
 					.on('mouseover', function(e) {
                         this.openPopup();
