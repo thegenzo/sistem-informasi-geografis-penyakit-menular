@@ -172,19 +172,19 @@
                         color: 'black'
 					})
 					.addTo(map)
-                    .bindPopup(`
-						${data[index].district_name}
-						<br>
-						Total Kasus: ${totalCases}
-						<br>
-						Data Penyakit Menular: ${data[index].disease_names}
-					`)
-					.on('mouseover', function(e) {
-                        this.openPopup();
-                    })
-					.on('mouseout', function (e) {
-						this.closePopup();
-					});
+                    // .bindPopup(`
+					// 	${data[index].district_name}
+					// 	<br>
+					// 	Total Kasus: ${totalCases}
+					// 	<br>
+					// 	Data Penyakit Menular: ${data[index].disease_names}
+					// `)
+					// .on('mouseover', function(e) {
+                    //     this.openPopup();
+                    // })
+					// .on('mouseout', function (e) {
+					// 	this.closePopup();
+					// });
 					
             });
         });
