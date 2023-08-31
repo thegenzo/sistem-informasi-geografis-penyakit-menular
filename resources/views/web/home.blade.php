@@ -332,12 +332,15 @@
 				var div = L.DomUtil.create('div', 'info legend');
 				var grades = [0, 250, 500];
 				var colors = ['#ffeda0', '#feb24c', '#f03b20'];
+				var legendTitle = 'Persebaran Penduduk dengan Penyakit Menular'; // Add your desired legend title here
+
+				div.innerHTML = '<div class="legend-title">' + legendTitle + '</div>'; // Adding the legend title
 				
 				for (var i = 0; i < grades.length; i++) {
 					div.innerHTML +=
 						'<i style="background:' + colors[i] + '"></i> ' +
 						(grades[i] === 0 ? '0' : (grades[i] + 1)) + 
-						(grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+						(grades[i + 1] ? ' &ndash; ' + grades[i + 1] + ' Orang<br>' : '+ Orang');
 				}
 				return div;
 			};
