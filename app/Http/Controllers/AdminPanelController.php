@@ -6,6 +6,7 @@ use App\Models\Disease;
 use App\Models\District;
 use App\Models\HealthcareFacilities;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AdminPanelController extends Controller
 {
@@ -28,6 +29,25 @@ class AdminPanelController extends Controller
                     ->leftJoin('diseases', 'cases.disease_id', '=', 'diseases.id')
                     ->groupBy('districts.id', 'districts.name', 'districts.coordinates')
                     ->get();
+
+        return $districts;
+    }
+
+    public function getDistrictsByDiseaseId($id)
+    {
+        $districts = District::selectRaw('
+                            districts.id as district_id,
+                            districts.name as district_name,
+                            districts.coordinates,
+                            SUM(cases.total) as total_cases,
+                            GROUP_CONCAT(DISTINCT diseases.name) as disease_names
+                        ')
+                        ->leftJoin('healthcare_facilities', 'districts.id', '=', 'healthcare_facilities.district_id')
+                        ->leftJoin('cases', 'healthcare_facilities.id', '=', 'cases.healthcare_facilities_id')
+                        ->leftJoin('diseases', 'cases.disease_id', '=', 'diseases.id')
+                        ->where('diseases.id', $id)
+                        ->groupBy('districts.id', 'districts.name', 'districts.coordinates')
+                        ->get();
 
         return $districts;
     }

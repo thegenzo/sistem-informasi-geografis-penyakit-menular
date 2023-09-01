@@ -33,6 +33,7 @@ Route::get('/dashboard', function () {
 
 Route::group(['prefix' => 'admin-panel'], function () {
     Route::get('/get-all-districts', [AdminPanelController::class, 'getAllDistricts']);
+    Route::get('/get-districts-by-id/{id}', [AdminPanelController::class, 'getDistrictsByDiseaseId']);
     Route::get('/get-all-healthcares', [AdminPanelController::class, 'getAllHealthcares']);
     Route::get('/polygon-except-one/{id}', [DistrictController::class, 'polygonExceptOne']);
     Route::get('/diseases-by-district', [AdminPanelController::class, 'getAllDiseasesByDistrict']);
