@@ -76,7 +76,7 @@
 		</div>
 		<div class="row justify-content-center">
 			<div class="col-lg-12 col-md-12 col-sm-12">
-				<h2 class="text-center">Wilayah Persebaran Penduduk Penderita Penyakit {{ $disease->name }}</h2>
+				<h2 class="text-center">Wilayah Persebaran Penduduk Penderita Penyakit {{ $disease->name }} (Tahun 2022)</h2>
 				<div id="map"></div>
 			</div>
 		</div>
