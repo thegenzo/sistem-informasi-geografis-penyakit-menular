@@ -21,12 +21,18 @@ class AdminPanelController extends Controller
                         districts.id as district_id,
                         districts.name as district_name,
                         districts.coordinates,
-                        SUM(cases.total) as total_cases,
+                        IFNULL(SUM(cases.total), NULL) as total_cases,
                         GROUP_CONCAT(DISTINCT diseases.name) as disease_names
                     ')
-                    ->leftJoin('healthcare_facilities', 'districts.id', '=', 'healthcare_facilities.district_id')
-                    ->leftJoin('cases', 'healthcare_facilities.id', '=', 'cases.healthcare_facilities_id')
-                    ->leftJoin('diseases', 'cases.disease_id', '=', 'diseases.id')
+                    ->leftJoin('healthcare_facilities', function ($join) {
+                        $join->on('districts.id', '=', 'healthcare_facilities.district_id');
+                    })
+                    ->leftJoin('cases', function ($join) {
+                        $join->on('healthcare_facilities.id', '=', 'cases.healthcare_facilities_id');
+                    })
+                    ->leftJoin('diseases', function ($join) {
+                        $join->on('cases.disease_id', '=', 'diseases.id');
+                    })
                     ->groupBy('districts.id', 'districts.name', 'districts.coordinates')
                     ->get();
 
@@ -36,18 +42,21 @@ class AdminPanelController extends Controller
     public function getDistrictsByDiseaseId($id)
     {
         $districts = District::selectRaw('
-                            districts.id as district_id,
-                            districts.name as district_name,
-                            districts.coordinates,
-                            SUM(cases.total) as total_cases,
-                            GROUP_CONCAT(DISTINCT diseases.name) as disease_names
-                        ')
-                        ->leftJoin('healthcare_facilities', 'districts.id', '=', 'healthcare_facilities.district_id')
-                        ->leftJoin('cases', 'healthcare_facilities.id', '=', 'cases.healthcare_facilities_id')
-                        ->leftJoin('diseases', 'cases.disease_id', '=', 'diseases.id')
-                        ->where('diseases.id', $id)
-                        ->groupBy('districts.id', 'districts.name', 'districts.coordinates')
-                        ->get();
+                        districts.id as district_id,
+                        districts.name as district_name,
+                        districts.coordinates,
+                        IFNULL(SUM(cases.total), NULL) as total_cases,
+                        GROUP_CONCAT(DISTINCT diseases.name) as disease_names
+                    ')
+                    ->leftJoin('healthcare_facilities', 'districts.id', '=', 'healthcare_facilities.district_id')
+                    ->leftJoin('cases', function ($join) use ($id) {
+                        $join->on('healthcare_facilities.id', '=', 'cases.healthcare_facilities_id')
+                            ->where('cases.disease_id', '=', $id);
+                    })
+                    ->leftJoin('diseases', 'cases.disease_id', '=', 'diseases.id')
+                    ->groupBy('districts.id', 'districts.name', 'districts.coordinates')
+                    ->get();
+
 
         return $districts;
     }

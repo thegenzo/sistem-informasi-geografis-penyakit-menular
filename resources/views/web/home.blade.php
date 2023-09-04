@@ -291,7 +291,10 @@
 				var totalCases = data[index].total_cases;
 				
 				var polyColor;
-				if(totalCases < 250) {
+				if (totalCases === null) {
+					polyColor = '#ffffb2'
+				}
+				else if(totalCases < 250) {
 					polyColor = '#ffeda0';
 				} else if (totalCases > 250 && totalCases < 500) {
 					polyColor = '#feb24c';
@@ -336,6 +339,8 @@
 
 				div.innerHTML = '<div class="legend-title">' + legendTitle + '</div>'; // Adding the legend title
 				
+				// Handle null totalCases
+				div.innerHTML += '<i style="background:#ffffb2"></i> Data Tidak Tersedia<br>';
 				for (var i = 0; i < grades.length; i++) {
 					div.innerHTML +=
 						'<i style="background:' + colors[i] + '"></i> ' +
