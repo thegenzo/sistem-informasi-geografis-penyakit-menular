@@ -37,6 +37,7 @@ Route::group(['prefix' => 'admin-panel'], function () {
     Route::get('/get-all-healthcares', [AdminPanelController::class, 'getAllHealthcares']);
     Route::get('/polygon-except-one/{id}', [DistrictController::class, 'polygonExceptOne']);
     Route::get('/diseases-by-district', [AdminPanelController::class, 'getAllDiseasesByDistrict']);
+    Route::get('/cases-by-district-id/{id}', [AdminPanelController::class, 'getCasesByDistrict']);
 });
 
 Route::middleware('auth')->group(function () {

@@ -286,6 +286,33 @@
             maxZoom: 18,
         }).addTo(map);
 
+		function getCasesData(districtId) {
+			$.getJSON(`/admin-panel/cases-by-district-id/${districtId}`, function(casesData) {
+				var tableBody = '';
+				
+				$.each(casesData, function(diseaseName, cases) {
+					tableBody += `
+						<tr>
+							<td rowspan=${cases.length + 1}>${diseaseName}</td>
+					`
+					$.each(cases, function(index, caseData) {
+						// Use a ternary operator to determine the gender abbreviation
+						var genderAbbreviation = caseData.gender === 'male' ? 'L' : caseData.gender === 'female' ? 'P' : caseData.gender === 'm+f' ? 'L+P' : '';
+						tableBody += `
+							<tr>
+								<td>${genderAbbreviation}</td>
+								<td>${caseData.total_cases}</td>
+							</tr>
+						</tr>`;
+					});
+				});
+
+				// Populate the table body
+				$('#popup-table-body').html(tableBody);
+			});
+		}
+
+
         $.getJSON('/admin-panel/get-all-districts', function(data) {
             $.each(data, function (index) {
 				var totalCases = data[index].total_cases;
@@ -303,6 +330,36 @@
 				}
 
                 var dataCoords = JSON.parse(data[index].coordinates);
+				var districtPopup = L.popup({
+					maxHeight: 150,
+					maxWidth: 400,
+ 					closeOnClick: false,
+ 					keepInView: true
+					}).setContent(`
+						${data[index].district_name}
+						<br>
+						Total Kasus: ${totalCases}
+						<br>
+						Data Penyakit Menular: ${data[index].disease_names}
+						<br>
+						<div class="popup-content"> <!-- Wrap the content in a div for stylin6 -->
+							<table class="table">
+								<thead>
+									<tr>
+										<th>Penyakit</th>
+										<th>Jenis Kelamin</th>
+										<th>Kasus</th>
+									</tr>
+								</thead>
+								<tbody id="popup-table-body">
+									<!-- Data will be inserted here -->
+								</tbody>
+							</table>
+							<br>
+							Data tahun 2022
+						</div>
+					`);
+
                 L.polygon(dataCoords, { 
 						fillColor: polyColor,
 						weight: 2,
@@ -312,19 +369,15 @@
                         color: 'black'
 					})
 					.addTo(map)
-                    .bindPopup(`
-						${data[index].district_name}
-						<br>
-						Total Kasus: ${totalCases}
-						<br>
-						Data Penyakit Menular: ${data[index].disease_names}
-					`)
+                    .bindPopup(districtPopup)
+					.on('mouseenter', function(e) { // Use 'mouseenter' event
+						this.openPopup();
+						getCasesData(data[index].district_id); // Fetch and populate Cases data
+					})
 					.on('mouseover', function(e) {
                         this.openPopup();
+						getCasesData(data[index].district_id);
                     })
-					.on('mouseout', function (e) {
-						this.closePopup();
-					});
 					
             });
 

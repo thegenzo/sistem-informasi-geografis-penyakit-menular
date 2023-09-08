@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cases;
 use App\Models\Disease;
 use App\Models\District;
 use App\Models\HealthcareFacilities;
@@ -70,6 +71,23 @@ class AdminPanelController extends Controller
         })->get();
 
         return $diseaseDataInDistrict;
+    }
+
+    public function getCasesByDistrict($id)
+    {
+        $cases = Cases::with(['healthcare_facilities' => function ($query) use ($id) {
+            $query->where('district_id', $id); // Filter by the desired district_id within the subquery
+        }])
+            ->selectRaw('cases.disease_id, diseases.name as disease_name, gender, SUM(cases.total) as total_cases')
+            ->join('diseases', 'cases.disease_id', '=', 'diseases.id') // Join with diseases table
+            ->whereHas('healthcare_facilities', function ($query) use ($id) {
+                $query->where('district_id', $id); // Filter by the desired district_id in the main query
+            })
+            ->groupBy('cases.disease_id', 'disease_name', 'gender')
+            ->get()
+            ->groupBy('disease_name'); // Group by disease_name
+        
+        return $cases;
     }
 
     public function getAllHealthcares()
