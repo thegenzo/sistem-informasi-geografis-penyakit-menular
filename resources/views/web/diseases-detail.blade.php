@@ -127,6 +127,12 @@
 						${data[index].district_name}
 						<br>
 						Total Kasus: ${totalCases}
+						<br>
+						L: ${data[index].total_male_cases}
+						<br>
+						P: ${data[index].total_female_cases}
+						<br>
+						L+P: ${data[index].total_mf_cases}
 					`)
 					.on('mouseover', function(e) {
                         this.openPopup();

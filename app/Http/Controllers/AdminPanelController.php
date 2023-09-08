@@ -47,7 +47,10 @@ class AdminPanelController extends Controller
                         districts.name as district_name,
                         districts.coordinates,
                         IFNULL(SUM(cases.total), NULL) as total_cases,
-                        GROUP_CONCAT(DISTINCT diseases.name) as disease_names
+                        GROUP_CONCAT(DISTINCT diseases.name) as disease_names,
+                        SUM(CASE WHEN cases.gender = "male" THEN cases.total ELSE 0 END) as total_male_cases,
+                        SUM(CASE WHEN cases.gender = "female" THEN cases.total ELSE 0 END) as total_female_cases,
+                        SUM(CASE WHEN cases.gender = "m+f" THEN cases.total ELSE 0 END) as total_mf_cases
                     ')
                     ->leftJoin('healthcare_facilities', 'districts.id', '=', 'healthcare_facilities.district_id')
                     ->leftJoin('cases', function ($join) use ($id) {
@@ -57,10 +60,10 @@ class AdminPanelController extends Controller
                     ->leftJoin('diseases', 'cases.disease_id', '=', 'diseases.id')
                     ->groupBy('districts.id', 'districts.name', 'districts.coordinates')
                     ->get();
-
-
+    
         return $districts;
     }
+    
 
     public function getAllDiseasesByDistrict()
     {
