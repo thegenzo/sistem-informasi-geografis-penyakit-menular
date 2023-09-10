@@ -126,13 +126,37 @@
                     .bindPopup(`
 						${data[index].district_name}
 						<br>
-						Total Kasus: ${totalCases}
+						Total Kasus Berdasarkan Jenis Kelamin: ${totalCases}
 						<br>
-						L: ${data[index].total_male_cases}
+						Laki-laki: ${data[index].total_male_cases}
 						<br>
-						P: ${data[index].total_female_cases}
+						Perempuan: ${data[index].total_female_cases}
 						<br>
 						L+P: ${data[index].total_mf_cases}
+						<br>
+						Total Kasus Berdasarkan Status
+						<br>
+						Terduga: ${data[index].total_suspected_cases}
+						<br>
+						Positif: ${data[index].total_confirmed_cases}
+						<br>
+						Sembuh: ${data[index].total_recovered_cases}
+						<br>
+						Meninggal: ${data[index].total_deceased_cases}
+						<br>
+						Total Kasus Berdasarkan Tingkat Kekerasan:
+						<br>
+						Ringan: ${data[index].total_mild_cases}
+						<br>
+						Sedang: ${data[index].total_moderate_cases}
+						<br>
+						Berat: ${data[index].total_severe_cases}
+						<br>
+						Kritis: ${data[index].total_critical_cases}
+						<br>
+						Tanpa Gejala: ${data[index].total_asymptomatic_cases}
+
+
 					`)
 					.on('mouseover', function(e) {
                         this.openPopup();

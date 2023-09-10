@@ -296,12 +296,13 @@
 							<td rowspan=${cases.length + 1}>${diseaseName}</td>
 					`
 					$.each(cases, function(index, caseData) {
-						// Use a ternary operator to determine the gender abbreviation
-						var genderAbbreviation = caseData.gender === 'male' ? 'L' : caseData.gender === 'female' ? 'P' : caseData.gender === 'm+f' ? 'L+P' : '';
 						tableBody += `
 							<tr>
-								<td>${genderAbbreviation}</td>
-								<td>${caseData.total_cases}</td>
+								<td>${caseData.gender}</td>
+								<td>${caseData.age}</td>
+								<td>${caseData.total}</td>
+								<td>${caseData.severity}</td>
+								<td>${caseData.status}</td>
 							</tr>
 						</tr>`;
 					});
@@ -331,8 +332,8 @@
 
                 var dataCoords = JSON.parse(data[index].coordinates);
 				var districtPopup = L.popup({
-					maxHeight: 150,
-					maxWidth: 400,
+					maxHeight: 130,
+					maxWidth: 500,
  					closeOnClick: false,
  					keepInView: true
 					}).setContent(`
@@ -348,7 +349,10 @@
 									<tr>
 										<th>Penyakit</th>
 										<th>Jenis Kelamin</th>
-										<th>Kasus</th>
+										<th>Usia</th>
+										<th>Total Kasus</th>
+										<th>Tingkat Keparahan</th>
+										<th>Status</th>
 									</tr>
 								</thead>
 								<tbody id="popup-table-body">

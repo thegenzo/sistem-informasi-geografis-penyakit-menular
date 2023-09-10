@@ -50,7 +50,16 @@ class AdminPanelController extends Controller
                         GROUP_CONCAT(DISTINCT diseases.name) as disease_names,
                         SUM(CASE WHEN cases.gender = "male" THEN cases.total ELSE 0 END) as total_male_cases,
                         SUM(CASE WHEN cases.gender = "female" THEN cases.total ELSE 0 END) as total_female_cases,
-                        SUM(CASE WHEN cases.gender = "m+f" THEN cases.total ELSE 0 END) as total_mf_cases
+                        SUM(CASE WHEN cases.gender = "m+f" THEN cases.total ELSE 0 END) as total_mf_cases,
+                        SUM(CASE WHEN cases.status = "suspected" THEN cases.total ELSE 0 END) as total_suspected_cases,
+                        SUM(CASE WHEN cases.status = "confirmed" THEN cases.total ELSE 0 END) as total_confirmed_cases,
+                        SUM(CASE WHEN cases.status = "recovered" THEN cases.total ELSE 0 END) as total_recovered_cases,
+                        SUM(CASE WHEN cases.status = "deceased" THEN cases.total ELSE 0 END) as total_deceased_cases,
+                        SUM(CASE WHEN cases.severity = "mild" THEN cases.total ELSE 0 END) as total_mild_cases,
+                        SUM(CASE WHEN cases.severity = "moderate" THEN cases.total ELSE 0 END) as total_moderate_cases,
+                        SUM(CASE WHEN cases.severity = "severe" THEN cases.total ELSE 0 END) as total_severe_cases,
+                        SUM(CASE WHEN cases.severity = "critical" THEN cases.total ELSE 0 END) as total_critical_cases,
+                        SUM(CASE WHEN cases.severity = "asymptomatic" THEN cases.total ELSE 0 END) as total_asymptomatic_cases
                     ')
                     ->leftJoin('healthcare_facilities', 'districts.id', '=', 'healthcare_facilities.district_id')
                     ->leftJoin('cases', function ($join) use ($id) {
@@ -79,16 +88,10 @@ class AdminPanelController extends Controller
     public function getCasesByDistrict($id)
     {
         $cases = Cases::with(['healthcare_facilities' => function ($query) use ($id) {
-            $query->where('district_id', $id); // Filter by the desired district_id within the subquery
-        }])
-            ->selectRaw('cases.disease_id, diseases.name as disease_name, gender, SUM(cases.total) as total_cases')
-            ->join('diseases', 'cases.disease_id', '=', 'diseases.id') // Join with diseases table
-            ->whereHas('healthcare_facilities', function ($query) use ($id) {
-                $query->where('district_id', $id); // Filter by the desired district_id in the main query
-            })
-            ->groupBy('cases.disease_id', 'disease_name', 'gender')
-            ->get()
-            ->groupBy('disease_name'); // Group by disease_name
+            $query->where('district_id', $id); // Replace 1 with the desired district_id
+        }])->get()->groupBy(function ($data) {
+            return $data->disease->name;
+        });
         
         return $cases;
     }
