@@ -155,7 +155,9 @@
 						Kritis: ${data[index].total_critical_cases}
 						<br>
 						Tanpa Gejala: ${data[index].total_asymptomatic_cases}
-
+						<br>
+						<br>
+						Data tahun 2022
 
 					`)
 					.on('mouseover', function(e) {
