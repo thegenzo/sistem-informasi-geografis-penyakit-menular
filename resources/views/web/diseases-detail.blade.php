@@ -103,7 +103,7 @@
 				
 				var polyColor;
 				if (totalCases === null) {
-					polyColor = '#ffffb2'
+					polyColor = '#ffffff'
 				}
 				else if(totalCases < 250) {
 					polyColor = '#ffeda0';

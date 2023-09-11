@@ -130,7 +130,10 @@
 				var totalCases = data[index].total_cases;
 				
 				var polyColor;
-				if(totalCases < 250) {
+				if (totalCases === null) {
+					polyColor = '#ffffff'
+				}
+				else if(totalCases < 250) {
 					polyColor = '#ffeda0';
 				} else if (totalCases > 250 && totalCases < 500) {
 					polyColor = '#feb24c';
@@ -139,6 +142,39 @@
 				}
 
                 var dataCoords = JSON.parse(data[index].coordinates);
+				var districtPopup = L.popup({
+					maxHeight: 130,
+					maxWidth: 500,
+ 					closeOnClick: false,
+ 					keepInView: true
+					}).setContent(`
+						${data[index].district_name}
+						<br>
+						Total Kasus: ${totalCases}
+						<br>
+						Data Penyakit Menular: ${data[index].disease_names}
+						<br>
+						<div class="popup-content"> <!-- Wrap the content in a div for stylin6 -->
+							<table class="table">
+								<thead>
+									<tr>
+										<th>Penyakit</th>
+										<th>Jenis Kelamin</th>
+										<th>Usia</th>
+										<th>Total Kasus</th>
+										<th>Tingkat Keparahan</th>
+										<th>Status</th>
+									</tr>
+								</thead>
+								<tbody id="popup-table-body">
+									<!-- Data will be inserted here -->
+								</tbody>
+							</table>
+							<br>
+							Data tahun 2022
+						</div>
+					`);
+
                 L.polygon(dataCoords, { 
 						fillColor: polyColor,
 						weight: 2,
@@ -148,44 +184,43 @@
                         color: 'black'
 					})
 					.addTo(map)
-                    .bindPopup(`
-						${data[index].district_name}
-						<br>
-						Total Kasus: ${totalCases}
-						<br>
-						Data Penyakit Menular: ${data[index].disease_names}
-					`)
+                    .bindPopup(districtPopup)
+					.on('mouseenter', function(e) { // Use 'mouseenter' event
+						this.openPopup();
+						getCasesData(data[index].district_id); // Fetch and populate Cases data
+					})
 					.on('mouseover', function(e) {
                         this.openPopup();
+						getCasesData(data[index].district_id);
                     })
-					.on('mouseout', function (e) {
-						this.closePopup();
-					});
 					
             });
 
-            // Populate the legend
+ 			// Populate the legend
  			var legend = L.control({ position: 'bottomright' });
 
-            legend.onAdd = function(map) {
-                var div = L.DomUtil.create('div', 'info legend');
-                var grades = [0, 250, 500];
-                var colors = ['#ffeda0', '#feb24c', '#f03b20'];
-                var legendTitle = 'Persebaran Penduduk dengan Penyakit Menular'; // Add your desired legend title here
+			legend.onAdd = function(map) {
+				var div = L.DomUtil.create('div', 'info legend');
+				var grades = [0, 250, 500];
+				var colors = ['#ffeda0', '#feb24c', '#f03b20'];
+				var legendTitle = 'Persebaran Penduduk dengan Penyakit Menular'; // Add your desired legend title here
 
-                div.innerHTML = '<div class="legend-title">' + legendTitle + '</div>'; // Adding the legend title
-                
-                for (var i = 0; i < grades.length; i++) {
-                    div.innerHTML +=
-                        '<i style="background:' + colors[i] + '"></i> ' +
-                        (grades[i] === 0 ? '0' : (grades[i] + 1)) + 
-                        (grades[i + 1] ? ' &ndash; ' + grades[i + 1] + ' Orang<br>' : '+ Orang');
-                }
-                return div;
-            };
-            
-            legend.addTo(map);
+				div.innerHTML = '<div class="legend-title">' + legendTitle + '</div>'; // Adding the legend title
+				
+				// Handle null totalCases
+				div.innerHTML += '<i style="background:#ffffb2"></i> Data Tidak Tersedia<br>';
+				for (var i = 0; i < grades.length; i++) {
+					div.innerHTML +=
+						'<i style="background:' + colors[i] + '"></i> ' +
+						(grades[i] === 0 ? '0' : (grades[i] + 1)) + 
+						(grades[i + 1] ? ' &ndash; ' + grades[i + 1] + ' Orang<br>' : '+ Orang');
+				}
+				return div;
+			};
+
+			legend.addTo(map);
         });
+
 
     </script>
     
