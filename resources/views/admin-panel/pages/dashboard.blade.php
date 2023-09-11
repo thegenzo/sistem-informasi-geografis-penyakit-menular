@@ -125,6 +125,33 @@
             maxZoom: 18,
         }).addTo(map);
 
+        function getCasesData(districtId) {
+			$.getJSON(`/admin-panel/cases-by-district-id/${districtId}`, function(casesData) {
+				var tableBody = '';
+				
+				$.each(casesData, function(diseaseName, cases) {
+					tableBody += `
+						<tr>
+							<td rowspan=${cases.length + 1}>${diseaseName}</td>
+					`
+					$.each(cases, function(index, caseData) {
+						tableBody += `
+							<tr>
+								<td>${caseData.gender}</td>
+								<td>${caseData.age}</td>
+								<td>${caseData.total}</td>
+								<td>${caseData.severity}</td>
+								<td>${caseData.status}</td>
+							</tr>
+						</tr>`;
+					});
+				});
+
+				// Populate the table body
+				$('#popup-table-body').html(tableBody);
+			});
+		}
+
         $.getJSON('/admin-panel/get-all-districts', function(data) {
             $.each(data, function (index) {
 				var totalCases = data[index].total_cases;
