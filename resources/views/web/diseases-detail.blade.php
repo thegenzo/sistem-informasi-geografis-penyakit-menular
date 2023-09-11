@@ -182,7 +182,7 @@
 				div.innerHTML = '<div class="legend-title">' + legendTitle + '</div>'; // Adding the legend title
 				
 				// Handle null totalCases
-				div.innerHTML += '<i style="background:#ffffb2"></i> Data Tidak Tersedia<br>';
+				div.innerHTML += '<i style="background:#ffffff"></i> Data Tidak Tersedia<br>';
 				for (var i = 0; i < grades.length; i++) {
 					div.innerHTML +=
 						'<i style="background:' + colors[i] + '"></i> ' +
