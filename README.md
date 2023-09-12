@@ -28,6 +28,13 @@ Dari direktori utama project ini, jalankan perintah
 ``` php artisan serve ```
 
 Buka browser anda dan masuk di url ```localhost:8000```
+<br>
+<br>
+Login:
+<br>
+admin@gmail.com
+<br>
+admin123
 
 ## Special thanks to
 
