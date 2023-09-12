@@ -88,11 +88,16 @@ class AdminPanelController extends Controller
     public function getCasesByDistrict($id)
     {
         $cases = Cases::with(['healthcare_facilities' => function ($query) use ($id) {
-            $query->where('district_id', $id); // Replace 1 with the desired district_id
-        }])->get()->groupBy(function ($data) {
+            $query->where('district_id', $id);
+        }])
+        ->whereHas('healthcare_facilities', function ($query) use ($id) {
+            $query->where('district_id', $id);
+        })
+        ->get()
+        ->groupBy(function ($data) {
             return $data->disease->name;
         });
-        
+    
         return $cases;
     }
 
