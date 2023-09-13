@@ -19,10 +19,13 @@ Install project ini dengan melakukan perintah
 
 Setup database anda di file ```.env```
 
-Jalankan perintah 
-<li>``` php artisan key:generate ```</li>
-<li>``` php artisan migrate --seed ```</li>
-<li>``` php artisan storage:link ```</li>
+Jalankan perintah:
+<br>
+``` php artisan key:generate ```
+<br>
+``` php artisan migrate --seed ```
+<br>
+``` php artisan storage:link ```
 
 ## Run
 
