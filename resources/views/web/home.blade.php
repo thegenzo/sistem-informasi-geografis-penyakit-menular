@@ -66,7 +66,7 @@
 	<div class="corona-count-top wow fadeInUp" data-wow-delay="0.3s">
 		<div class="row justify-content-center align-items-center">
 			<div class="col-xl-12 col-md-12 col-12">
-				<h2 class="text-center">Wilayah Persebaran Penduduk Penderita Penyakit Menular Kota Baubau (Tahun 2022)</h2>
+				<h2 class="text-center">Wilayah Persebaran Penderita Penyakit Menular Kota Baubau (Tahun 2022)</h2>
 				<div id="map"></div>
 			</div>
 		</div>
