@@ -64,6 +64,7 @@
 									<img src="{{ asset($disease->cover_image)}}" alt="blog">
 								</div>
 								<div class="post-content">
+									<p>Oleh {{ $disease->user->name }}</p>
 									<h3>{{ $disease->name }}</h3>
 
 									{!! $disease->description !!}

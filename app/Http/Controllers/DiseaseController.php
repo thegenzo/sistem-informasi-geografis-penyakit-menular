@@ -58,6 +58,7 @@ class DiseaseController extends Controller
         $path = $cover_image->storeAs($upload_filepath, $filename);
 
         $data = $request->all();
+        $data['user_id'] = auth()->user()->id;
         unset($data['cover_image']);
         $data['cover_image'] = Storage::url($path);
         Disease::create($data);
@@ -103,6 +104,7 @@ class DiseaseController extends Controller
         }
 
         $data = $request->all();
+        $data['user_id'] = auth()->user()->id;
 
         if ($request->has('cover_image')) {
             $existing_image = basename($disease->cover_image);

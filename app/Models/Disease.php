@@ -10,6 +10,7 @@ class Disease extends Model
     use HasFactory;
 
     protected $fillable = [
+        'user_id',
         'cover_image',
         'name',
         'description',
@@ -18,5 +19,10 @@ class Disease extends Model
     public function cases()
     {
         return $this->hasMany(Cases::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }
