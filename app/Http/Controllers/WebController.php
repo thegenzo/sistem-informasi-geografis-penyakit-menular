@@ -40,6 +40,23 @@ class WebController extends Controller
                             return $data->disease->name;
                         });
 
-        return view('web.cases', compact('cases', 'healthcare'));
+        $arrTotalCases = [];
+
+        foreach ($cases as $diseaseName => $diseaseCases) {
+            $totalCases = $diseaseCases->sum('total');
+            $arrTotalCases[$diseaseName] = $totalCases;
+        }
+
+        // Calculate the total cases
+        $totalCases = array_sum($arrTotalCases);
+
+        // Calculate percentages and update the array
+        $percentages = [];
+        foreach ($arrTotalCases as $disease => $total) {
+            $percentage = ($total / $totalCases) * 100;
+            $percentages[$disease] = $percentage;
+        }
+
+        return view('web.cases', compact('cases', 'healthcare', 'arrTotalCases', 'percentages'));
     }
 }
